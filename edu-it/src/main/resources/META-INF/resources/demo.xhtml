@@ -1,0 +1,18 @@
+<ui:composition lang="#{catalogueExplorerI18N.language}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="edu/templates/fullscreen.xhtml">
+
+	<ui:define name="content">
+		<h1>Demo</h1>
+		
+		<h:outputText styleClass="updated-string-value" value="#{demo.stringModel.value}" updateOn="stringModelChanged" />
+		
+		<h:form id="demo">
+			<ui:include src="edu/includes/demoForm.xhtml">[Missing Include]</ui:include>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>
