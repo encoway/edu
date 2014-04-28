@@ -11,6 +11,7 @@
 		<module>edu</module>
 		<module>edu-it</module>
 		<module>edu-it-myfaces</module>
+		<module>edu-it-mojarra</module>
 	</modules>
 
 	<url>https://jira.encoway-services.de/browse/OSS</url>

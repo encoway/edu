@@ -3,6 +3,7 @@ package com.encoway.edu.controller;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import com.encoway.edu.model.DemoModel;
 
@@ -22,7 +23,15 @@ public class DemoController {
 		return intModel;
 	}
 	
-	public void reset(ActionEvent event) {
+	public void updateStringModel(AjaxBehaviorEvent event) {
+		stringModel.setValue(stringModel.getValue() + "+");
+	}
+	
+	public void updateIntModel(AjaxBehaviorEvent event) {
+		intModel.setValue(intModel.getValue() + 1);
+	}
+	
+	public void reset(AjaxBehaviorEvent event) {
 		stringModel.reset();
 		intModel.reset();
 	}

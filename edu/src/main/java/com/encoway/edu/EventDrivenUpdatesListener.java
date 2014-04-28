@@ -3,6 +3,7 @@ package com.encoway.edu;
 import java.beans.FeatureDescriptor;
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -18,8 +19,10 @@ import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 
 /**
  * {@link SystemEventListener} der nach dem Hinzuf�gen eines {@link UIComponent} pr�ft, ob
@@ -78,20 +81,20 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	@Override
 	public void processEvent(ComponentSystemEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		Map<String, String> eventListenerMap = resolver.getEventListenerMap(facesContext).getDelegate();
+		Map<String, Set<String>> eventListenerMap = resolver.getEventListenerMap(facesContext).getDelegate();
 		// relevante Informationen der zu registrierende Komponente: ID + Event Namen    
 		UIComponent listener = event.getComponent();
 		String eventNames = (String) listener.getAttributes().get(eventsAttribute);
 		String listenerId = ComponentUtils.getFullyQualifiedComponentId(facesContext, listener);
 		for (String eventName : EVENT_ATTRIBUTE_SPLITTER.split(eventNames)) {
 			// bereits registrierte Komponenten-IDs auslesen
-			String listenerIds = eventListenerMap.containsKey(eventName) ? eventListenerMap.get(eventName) : "";
-			StringBuilder builder = new StringBuilder(listenerIds.length() + 1 + listenerId.length());
-			if (listenerIds.length() > 0) {
-				builder.append(listenerIds).append(EVENT_LISTENER_DELIMITER); 
+			Set<String> listenerIds = eventListenerMap.get(eventName);
+			if (listenerIds == null) {
+				listenerIds = new HashSet<>();
+				eventListenerMap.put(eventName, listenerIds);
 			}
-			builder.append(listenerId);
-			eventListenerMap.put(eventName, builder.toString());
+			
+			listenerIds.add(listenerId); 
 		}
 	}
 
@@ -190,9 +193,9 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 		 */
 		public static class EventListenerMap extends AbstractMap<String, String> {
 			
-			private final Map<String, String> delegate = new HashMap<>();
+			private final Map<String, Set<String>> delegate = new HashMap<>();
 			
-			Map<String, String> getDelegate() {
+			Map<String, Set<String>> getDelegate() {
 				return delegate;
 			}
 			
@@ -209,20 +212,18 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 			 */
 			private String get(String events, String defaultValue) {
 				if (!Strings.isNullOrEmpty(events)) {
-					StringBuilder builder = new StringBuilder();
+					final Set<String> ids = new HashSet<>();
+					
 					for (String eventName : EVENT_ATTRIBUTE_SPLITTER.split(events)) {
-						String listeners = delegate.get(eventName);
+						Set<String> listenerIds = delegate.get(eventName);
 						
-						if (!Strings.isNullOrEmpty(listeners)) {							
-							if (builder.length() > 0) {
-								builder.append(EVENT_LISTENER_DELIMITER);
-							}
-							builder.append(listeners);
+						if (listenerIds != null && !listenerIds.isEmpty()) {							
+							ids.addAll(listenerIds);
 						}
 					}
 					
-					if (builder.length() > 0) {
-						return builder.toString();
+					if (!ids.isEmpty()) {
+						return Joiner.on(EVENT_LISTENER_DELIMITER).join(ids);
 					}
 				}
 				return defaultValue;
@@ -230,7 +231,7 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 
 			@Override
 			public Set<Map.Entry<String, String>> entrySet() {
-				return delegate.entrySet();
+				throw new UnsupportedOperationException("this map is get-only");
 			}
 			
 		}

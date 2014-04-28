@@ -1,8 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://java.sun.com/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
 	<h:form id="demo" styleClass="form-horizontal">
 		<fieldset>
@@ -11,15 +11,15 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="textinput">String</label>
 				<div class="col-md-4">
-					<h:inputText value="#{demo.stringModel.value}"
+					<h:inputText id="stringInput" value="#{demo.stringModel.value}"
 						updateOn="string-model-changed" styleClass="form-control input-md" />
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="textinput">String</label>
+				<label class="col-md-4 control-label" for="textinput">Integer</label>
 				<div class="col-md-4">
-					<h:inputText value="#{demo.intModel.value}"
+					<h:inputText id="intInput" value="#{demo.intModel.value}"
 						updateOn="int-model-changed" styleClass="form-control input-md"
 						pt:type="number" />
 				</div>
@@ -31,19 +31,17 @@
 				<div class="col-md-8">
 					<!-- update listeners for 'string-model-changed' -->
 					<h:commandButton value="Update String" styleClass="btn btn-primary">
-						<f:ajax event="click" render="#{edu['string-model-changed']}" />
-						<f:setPropertyActionListener target="#{demo.stringModel.value}" value="#{demo.stringModel.value}+" />
+						<f:ajax event="click" render="#{edu['string-model-changed']}" listener="#{demo.updateStringModel}" />
 					</h:commandButton>
 
 					<!-- update listeners for 'int-model-changed' -->
 					<h:commandButton value="Update Integer" styleClass="btn btn-primary">
-						<f:ajax event="click" render="#{edu['int-model-changed']}" />
-						<f:setPropertyActionListener target="#{demo.intModel.value}" value="#{demo.intModel.value + 1}" />
+						<f:ajax event="click" render="#{edu['int-model-changed']}" listener="#{demo.updateIntModel}" />
 					</h:commandButton>
 
 					<!-- update listeners for 'string-model-changed' and 'int-model-changed' -->
-					<h:commandLink value="Reset String and Integer" actionListener="#{demo.reset}">
-						<f:ajax event="click" render="#{edu['string-model-changed int-model-changed']}" />
+					<h:commandLink value="Reset String and Integer">
+						<f:ajax event="click" render="#{edu['string-model-changed int-model-changed']}" listener="#{demo.reset}" />
 					</h:commandLink>
 				</div>
 			</div>
