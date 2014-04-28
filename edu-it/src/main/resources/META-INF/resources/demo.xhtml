@@ -1,18 +1,29 @@
-<ui:composition lang="#{catalogueExplorerI18N.language}" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition lang="#{catalogueExplorerI18N.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	template="edu/templates/fullscreen.xhtml">
 
 	<ui:define name="content">
 		<h1>Demo</h1>
-		
-		<h:outputText styleClass="updated-string-value" value="#{demo.stringModel.value}" updateOn="stringModelChanged" />
-		
-		<h:form id="demo">
-			<ui:include src="edu/includes/demoForm.xhtml">[Missing Include]</ui:include>
-		</h:form>
-		
+
+		<p>
+			<h:outputFormat id="hybridOutput"
+				styleClass="string-update int-update"
+				updateOn="string-model-changed int-model-changed"
+				value="Always up to date: String: {0}, Integer: {1}">
+				<f:param value="#{demo.stringModel.value}" />
+				<f:param value="#{demo.intModel.value}" />
+			</h:outputFormat>
+		</p>
+
+		<ui:include src="edu/includes/demoForm.xhtml">[Missing Include]</ui:include>
+
+		<pre class="brush: xhtml; collapse: true">
+			<h:outputText value="#{pages.getFileContents('/META-INF/resources/edu/includes/demoForm.xhtml')}" />
+		</pre>
+
 	</ui:define>
 
 </ui:composition>

@@ -6,18 +6,32 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.google.common.base.Functions;
-import com.google.common.base.Predicates;
+import com.google.common.base.Function;
 
 /**
  * 
  */
 public class WebDriverPatience {
 	
-    public static void wait(WebDriver driver, int duration, TimeUnit timeUnit) {
+	public static void wait(WebDriver driver, int duration, TimeUnit timeUnit) {
         final WebDriverWait webDriverWait = new WebDriverWait(driver, 5);
         Wait<WebDriver> wait = webDriverWait.pollingEvery(duration, timeUnit);
-        wait.until(Functions.forPredicate(Predicates.alwaysTrue()));
+        wait.until(new AskMeAgain(1));
     }
+
+	private static class AskMeAgain implements Function<WebDriver, Boolean> {
+		
+		private int invokationsUntilTrue;
+	
+		public AskMeAgain(int invokationsUntilTrue) {
+			this.invokationsUntilTrue = invokationsUntilTrue;
+		}
+	
+		@Override
+		public Boolean apply(WebDriver input) {
+			return invokationsUntilTrue-- <= 0;
+		}
+		
+	}
 
 }

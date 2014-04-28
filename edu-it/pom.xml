@@ -12,8 +12,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

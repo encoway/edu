@@ -1,38 +1,47 @@
 package com.encoway.edu;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.encoway.edu.util.WebDriverPatience;
-
-public class DemoPage {
+public class DemoPage extends AbstractPage<DemoPage> {
 	
-	private static final String UPDATED_STRING_CLASS_CONSTRAINT = "contains(@class, 'updated-string-value')";
+	@FindBy(xpath="//form//input[@type='submit' and contains(@value, 'String')]")
+	WebElement stringButton;
 	
-	@FindBy(xpath="//form/input[@type='submit']")
-	WebElement submitButton;
+	@FindBy(xpath="//form//input[@type='submit' and contains(@value, 'Integer')]")
+	WebElement integerButton;
 	
-	private final WebDriver driver;
+	@FindBy(xpath="//form//a[contains(text(), 'Reset')]")
+	WebElement resetLink;
 	
 	public DemoPage(WebDriver driver) {
-		this.driver = driver;
+		super(driver, "demo.xhtml");
 	}
 	
 	public void updateStringValue() {
-		submitButton.click();
-		WebDriverPatience.wait(driver, 50, TimeUnit.MILLISECONDS);
+		clickAndWait(stringButton);
+	}
+
+	public void updateIntegerValue() {
+		clickAndWait(integerButton);
+	}
+	
+	public void reset() {
+		clickAndWait(resetLink);
 	}
 	
 	public WebElement getOutputText() {
-		return driver.findElement(By.xpath("//span[" + UPDATED_STRING_CLASS_CONSTRAINT + "]"));
+		return driver.findElement(By.xpath("//p[preceding-sibling::h1]/span"));
 	}
 	
-	public WebElement getInputText() {
-		return driver.findElement(By.xpath("//form/input[" + UPDATED_STRING_CLASS_CONSTRAINT + "]"));
+	public WebElement getStringInput() {
+		return driver.findElement(By.xpath("//form//input[@type='text']"));
+	}
+	
+	public WebElement getIntegerInput() {
+		return driver.findElement(By.xpath("//form//input[@type='number']"));
 	}
 
 }

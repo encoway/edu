@@ -4,11 +4,13 @@ public class DemoModel<V> {
 	
 	private String name;
 	
+	private V initialValue;
+	
 	private V value;
 
 	public DemoModel(String name, V value) {
 		this.name = name;
-		this.value = value;
+		this.value = this.initialValue = value;
 	}
 
 	public String getName() {
@@ -25,6 +27,10 @@ public class DemoModel<V> {
 
 	public void setValue(V value) {
 		this.value = value;
+	}
+	
+	public void reset() {
+		setValue(initialValue);
 	}
 
 }

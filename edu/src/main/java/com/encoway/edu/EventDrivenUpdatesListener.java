@@ -1,9 +1,11 @@
 package com.encoway.edu;
 
 import java.beans.FeatureDescriptor;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.el.ELContext;
@@ -58,6 +60,8 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	
 	private static final Splitter EVENT_ATTRIBUTE_SPLITTER = Splitter.on(Pattern.compile("[ ,]"));
 	
+	private static final Splitter DEFAULT_VALUE_KEY_SPLITTER = Splitter.on('|');
+	
 	private final EventMapELResolver resolver;
 	
 	private final String eventsAttribute;
@@ -74,7 +78,7 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	@Override
 	public void processEvent(ComponentSystemEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		Map<String, String> eventListenerMap = resolver.getEventListenerMap(facesContext).getEventListenerMap();
+		Map<String, String> eventListenerMap = resolver.getEventListenerMap(facesContext).getDelegate();
 		// relevante Informationen der zu registrierende Komponente: ID + Event Namen    
 		UIComponent listener = event.getComponent();
 		String eventNames = (String) listener.getAttributes().get(eventsAttribute);
@@ -184,29 +188,30 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 		/**
 		 * Schnittstelle f�r das Auslesen von Listenern f�r ein Event. 
 		 */
-		public static class EventListenerMap {
+		public static class EventListenerMap extends AbstractMap<String, String> {
 			
-			private final Map<String, String> eventListenerMap = new HashMap<>();
+			private final Map<String, String> delegate = new HashMap<>();
 			
-			Map<String, String> getEventListenerMap() {
-				return eventListenerMap;
+			Map<String, String> getDelegate() {
+				return delegate;
 			}
 			
-			public String get(String keys) {
-				return get(keys, "@none");
+			public String get(Object key) {
+				final Iterator<String> iter = DEFAULT_VALUE_KEY_SPLITTER.split((String) key).iterator();
+				return get(iter.next(), iter.hasNext() ? iter.next() : "@none");
 			}
 			
 			/**
 			 * Gibt die IDs der Listener als String zur�ck.
-			 * @param event Liste von Events, Trennzeichen siehe {@link EventDrivenUpdatesListener#EVENT_ATTRIBUTE_SPLITTER} 
+			 * @param events Liste von Events, Trennzeichen siehe {@link EventDrivenUpdatesListener#EVENT_ATTRIBUTE_SPLITTER} 
 			 * @param defaultValue Standardwert der ausgegeben werden soll, sofern keine Listener registriert sind, standardm��ig {@code @none}
 			 * @return Liste von Listener IDs
 			 */
-			public String get(String event, String defaultValue) {
-				if (!Strings.isNullOrEmpty(event)) {
+			private String get(String events, String defaultValue) {
+				if (!Strings.isNullOrEmpty(events)) {
 					StringBuilder builder = new StringBuilder();
-					for (String eventName : EVENT_ATTRIBUTE_SPLITTER.split(event)) {
-						String listeners = eventListenerMap.get(eventName);
+					for (String eventName : EVENT_ATTRIBUTE_SPLITTER.split(events)) {
+						String listeners = delegate.get(eventName);
 						
 						if (!Strings.isNullOrEmpty(listeners)) {							
 							if (builder.length() > 0) {
@@ -221,6 +226,11 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 					}
 				}
 				return defaultValue;
+			}
+
+			@Override
+			public Set<Map.Entry<String, String>> entrySet() {
+				return delegate.entrySet();
 			}
 			
 		}

@@ -25,6 +25,10 @@
 		<servlet-name>JSF</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 	</servlet>
+	
+	<listener>
+		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+	</listener>
 
 	<servlet-mapping>
 		<servlet-name>JSF</servlet-name>
