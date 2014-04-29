@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 import javax.el.ELContext;
 import javax.el.ELResolver;
-import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -25,37 +24,17 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 
 /**
- * {@link SystemEventListener} der nach dem Hinzuf�gen eines {@link UIComponent} pr�ft, ob
- * dieses ein Attribut {@value #EVENTS_ATTRIBUTE_DEFAULT_NAME} hat. Ist dessen Wert, eine Komma/Leerzeichen separierte
- * Liste von Event-Namen, nicht leer, so wird in der Map names {@value EventMapELResolver#EVENT_LISTERNER_MAP_NAME} 
- * jeder Event-Name mit der ID des {@link UIComponent} verkn�pft.
- * 
- * <h2>Verwendung</h2>
- *
- * <pre title="Komponente 'someForm' registrieren">
- * &lt;h:form id="someForm" &gt;
- *     &lt;h:panelGroup id="somePanel" layout="block" &gt;
- *         &lt;f:attribute name={@value #EVENTS_ATTRIBUTE_DEFAULT_NAME} value="<strong>something-changed</strong>" /&gt;
- *     &lt;/h:panelGroup&gt;
- * &lt;/h:form&gt;
- * </pre>
- * 
- * In der Map {@value EventMapELResolver#EVENT_LISTERNER_MAP_NAME} steht nun die voll qualifizierte, d.h. absolute ID
- * von <code>somePanel</code>, <code>:someForm:somePanel</code>. 
- * 
- * <pre title="Registrierte Komponenten abrufen">
- * &lt;h:commandLink&gt;
- *     &lt;f:ajax render="#{customEventMap.get('<strong>something-changed</strong>')}" /&gt;
- * &lt;/h:commandLink&gt;
- * </pre>
- * 
- * @see EventDrivenUpdatesListener.EventMapELResolver.EventListenerMap#get(String, String)
+ * {@link SystemEventListener} which tracks on which event a {@link UIComponent} wants to be updated.
  */
 public class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
 	
-	private static final String INIT_PARAM_PREFIX = EventDrivenUpdatesListener.class.getPackage().getName();
+	private static final String CONTEXT_PARAM_PREFIX = "com.encoway.edu";
 	
-	private static final String EVENTS_ATTRIBUTE_INIT_PARAM = INIT_PARAM_PREFIX + ".LISTENER_ATTRIBUTE";
+	/**
+	 * Name of the <code>context-param</code> to override the listener attribute,
+	 * defaults to <code>updateOn</code>.
+	 */
+	public static final String EVENTS_ATTRIBUTE_CONTEXT_PARAM = CONTEXT_PARAM_PREFIX + ".LISTENER_ATTRIBUTE";
 
 	private static final char EVENT_LISTENER_DELIMITER = ' ';
 	
@@ -65,29 +44,27 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	
 	private static final Splitter DEFAULT_VALUE_KEY_SPLITTER = Splitter.on('|');
 	
-	private final EventMapELResolver resolver;
+	private final EventListenerMapELResolver resolver;
 	
 	private final String eventsAttribute;
 	
 	public EventDrivenUpdatesListener() {
 		final FacesContext context = FacesContext.getCurrentInstance();
-		final String eventsAttributeName = context.getExternalContext().getInitParameter(EVENTS_ATTRIBUTE_INIT_PARAM);
+		final String eventsAttributeName = context.getExternalContext().getInitParameter(EVENTS_ATTRIBUTE_CONTEXT_PARAM);
 		this.eventsAttribute = Strings.isNullOrEmpty(eventsAttributeName) ? EVENTS_ATTRIBUTE_DEFAULT_NAME : eventsAttributeName;
-		Application application = context.getApplication();
-		this.resolver = new EventMapELResolver(context);
-		application.addELResolver(resolver);
+		this.resolver = new EventListenerMapELResolver(context);
+		context.getApplication().addELResolver(resolver);
 	}
 	
 	@Override
 	public void processEvent(ComponentSystemEvent event) {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		Map<String, Set<String>> eventListenerMap = resolver.getEventListenerMap(facesContext).getDelegate();
-		// relevante Informationen der zu registrierende Komponente: ID + Event Namen    
-		UIComponent listener = event.getComponent();
-		String eventNames = (String) listener.getAttributes().get(eventsAttribute);
-		String listenerId = ComponentUtils.getFullyQualifiedComponentId(facesContext, listener);
+		final UIComponent listener = event.getComponent();
+		final FacesContext facesContext = FacesContext.getCurrentInstance();		    
+		final String listenerId = Components.getFullyQualifiedComponentId(facesContext, listener);
+		final Map<String, Set<String>> eventListenerMap = resolver.getEventListenerMap(facesContext).getDelegate();
+		final String eventNames = (String) listener.getAttributes().get(eventsAttribute);
 		for (String eventName : EVENT_ATTRIBUTE_SPLITTER.split(eventNames)) {
-			// bereits registrierte Komponenten-IDs auslesen
+		
 			Set<String> listenerIds = eventListenerMap.get(eventName);
 			if (listenerIds == null) {
 				listenerIds = new HashSet<>();
@@ -117,24 +94,111 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	}
 
 	/**
-	 * {@link ELResolver} f�r eine {@link Map} die Event-Namen auf {@link UIComponent}-IDs abbildet.
-	 * 
-	 * <h2>Konfiguration</h2>
-	 * Der Name der Variable �ber die Event-Map bereitgestellt wird l�sst sich durch einen Parameter
-	 * im {@link javax.servlet.ServletContext} (web.xml) namens {@value #EVENT_LISTENER_MAP_PARAMETER} konfigurieren.
+	 * A {@link Map} mapping event names to {@link UIComponent} IDs. 
 	 */
-	public static final class EventMapELResolver extends ELResolver {
+	public static class EventListenerMap extends AbstractMap<String, String> {
 		
-		public static final String EVENT_LISTENER_MAP_PARAMETER = INIT_PARAM_PREFIX + ".EVENT_LISTENER_MAP_NAME";
+		private static final String DEFAULT_VALUE = "@none";
+		
+		private final Map<String, Set<String>> delegate = new HashMap<>();
+		
+		EventListenerMap() {
+			
+		}
+		
+		Map<String, Set<String>> getDelegate() {
+			return delegate;
+		}
+		
+		/**
+		 * Returns a space separated list of component IDs of components associated with <code>events</code>.
+		 * 
+		 * <p>If <code>events</code> is a {@link String} the following format is expected: <code>event-a[[,] event-b][|<strong>default-value</strong>]</code><br>
+		 * Where <code><strong>default-value</strong></code> is returned if no matching event is found and defaults to <code>@none</code>.</p>
+		 * 
+		 * @return the list of component IDs associated with <code>events</code> or a default value (see above)
+		 * @param events either {@link String} (see above) or an {@link Iterable} of Strings
+		 * @throws IllegalArgumentException if <code>events</code> is not of the possible types
+		 * 
+		 * @see #get(String, String)
+		 * @see #get(Iterable, String)
+		 */
+		@SuppressWarnings("unchecked")
+		public String get(Object events) throws IllegalArgumentException {
+			if (events instanceof Iterable) {
+				return get((Iterable<String>) events, DEFAULT_VALUE);
+			} else if (events instanceof String) {
+				final Iterator<String> iter = DEFAULT_VALUE_KEY_SPLITTER.split((String) events).iterator();
+				return get(iter.next(), iter.hasNext() ? iter.next() : DEFAULT_VALUE);
+			}
+			throw new IllegalArgumentException("expected Iterable<String> or String but was " + events);
+		}
+		
+		/**
+		 * Returns a space separated list of component IDs of components registered for at least one the <code>events</code>.
+		 * 
+		 * @param events a collection of events
+		 * @param defaultValue will be returned if no component is registered for one of the <code>events</code>
+		 * @return a space separated list of fully qualified component IDs or <code>defaultValue</code>
+		 */
+		public String get(Iterable<String> events, String defaultValue) {
+			if (events != null && !Iterables.isEmpty(events)) {
+				final Set<String> ids = new HashSet<>();
+				
+				for (String eventName : events) {
+					Set<String> listenerIds = delegate.get(eventName);
+					
+					if (listenerIds != null && !listenerIds.isEmpty()) {							
+						ids.addAll(listenerIds);
+					}
+				}
+				
+				if (!ids.isEmpty()) {
+					return Joiner.on(EVENT_LISTENER_DELIMITER).join(ids);
+				}
+			}
+			return defaultValue;			
+		}
+		
+		/**
+		 * Returns a space separated list of component IDs of components registered for at least one the <code>events</code>.
+		 * 
+		 * @param events a comma/space separated list of event names
+		 * @param defaultValue will be returned if no component is registered for one of the <code>events</code>
+		 * @return a space separated list of fully qualified component IDs or <code>defaultValue</code>
+		 */
+		public String get(String events, String defaultValue) {
+			if (!Strings.isNullOrEmpty(events)) {
+				return get(EVENT_ATTRIBUTE_SPLITTER.split(events), defaultValue);
+			}
+			
+			return defaultValue;
+		}
+	
+		@Override
+		public Set<Map.Entry<String, String>> entrySet() {
+			throw new UnsupportedOperationException("this map is get-only");
+		}
+		
+	}
+
+	/**
+	 * {@link ELResolver} for a {@link EventListenerMap}.
+	 */
+	public static class EventListenerMapELResolver extends ELResolver {
+		
+		/**
+		 * Name of the <code>context-param</code> to override the EL variable name through which the EDU map is accessible,
+		 * defaults to <code>edu</code>.
+		 */
+		public static final String EVENT_LISTENER_MAP_CONTEXT_PARAM = CONTEXT_PARAM_PREFIX + ".EVENT_LISTENER_MAP_NAME";
 	
 		private static final String EVENT_LISTENER_MAP_DEFAULT_NAME = "edu";
 		
 		private final String eventListenerMapName;
 		
-		private final boolean readOnly = true; 
-	
-		public EventMapELResolver(FacesContext facesContext) {
-			String initParameter = facesContext.getExternalContext().getInitParameter(EVENT_LISTENER_MAP_PARAMETER);
+		EventListenerMapELResolver(FacesContext facesContext) {
+			String initParameter = facesContext.getExternalContext().getInitParameter(EVENT_LISTENER_MAP_CONTEXT_PARAM);
 			eventListenerMapName = Strings.isNullOrEmpty(initParameter) ? EVENT_LISTENER_MAP_DEFAULT_NAME : initParameter;
 		}
 	
@@ -161,7 +225,7 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	
 		@Override
 		public boolean isReadOnly(ELContext context, Object base, Object property) {
-			return readOnly;
+			return true;
 		}
 	
 		@Override
@@ -186,54 +250,6 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 
 		private boolean isResolvable(Object base, Object property) {
 			return base == null && eventListenerMapName.equals(property);
-		}
-		
-		/**
-		 * Schnittstelle f�r das Auslesen von Listenern f�r ein Event. 
-		 */
-		public static class EventListenerMap extends AbstractMap<String, String> {
-			
-			private final Map<String, Set<String>> delegate = new HashMap<>();
-			
-			Map<String, Set<String>> getDelegate() {
-				return delegate;
-			}
-			
-			public String get(Object key) {
-				final Iterator<String> iter = DEFAULT_VALUE_KEY_SPLITTER.split((String) key).iterator();
-				return get(iter.next(), iter.hasNext() ? iter.next() : "@none");
-			}
-			
-			/**
-			 * Gibt die IDs der Listener als String zur�ck.
-			 * @param events Liste von Events, Trennzeichen siehe {@link EventDrivenUpdatesListener#EVENT_ATTRIBUTE_SPLITTER} 
-			 * @param defaultValue Standardwert der ausgegeben werden soll, sofern keine Listener registriert sind, standardm��ig {@code @none}
-			 * @return Liste von Listener IDs
-			 */
-			private String get(String events, String defaultValue) {
-				if (!Strings.isNullOrEmpty(events)) {
-					final Set<String> ids = new HashSet<>();
-					
-					for (String eventName : EVENT_ATTRIBUTE_SPLITTER.split(events)) {
-						Set<String> listenerIds = delegate.get(eventName);
-						
-						if (listenerIds != null && !listenerIds.isEmpty()) {							
-							ids.addAll(listenerIds);
-						}
-					}
-					
-					if (!ids.isEmpty()) {
-						return Joiner.on(EVENT_LISTENER_DELIMITER).join(ids);
-					}
-				}
-				return defaultValue;
-			}
-
-			@Override
-			public Set<Map.Entry<String, String>> entrySet() {
-				throw new UnsupportedOperationException("this map is get-only");
-			}
-			
 		}
 		
 	}

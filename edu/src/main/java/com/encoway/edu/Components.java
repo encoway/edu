@@ -5,24 +5,27 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
-class ComponentUtils {
+/**
+ * Component utilities.
+ */
+class Components {
 	
 	/**
-	 * Gibt die voll qualifizierte (absolute) ID des �bergeben {@code component} zur�ck.
-	 * @param context ein {@link FacesContext}
-	 * @param component {@link UIComponent} dessen ID ermittelt werden soll
-	 * @return eine voll qualifizierte ID
+	 * Returns the fully qualified (absolute) ID of {@code component}.
+	 * @param context a {@link FacesContext}
+	 * @param component {@link UIComponent} to return the ID for
+	 * @return a fully qualified ID
 	 */
 	public static String getFullyQualifiedComponentId(FacesContext context, UIComponent component) {
 		return getFullyQualifiedComponentId(context, component, true);
 	}
 	
 	/**
-	 * Gibt die voll qualifizierte (absolute) ID des �bergeben {@code component} zur�ck.
-	 * @param context ein {@link FacesContext}
-	 * @param component {@link UIComponent} dessen ID ermittelt werden soll
-	 * @param absolute wenn {@code true} wird {@link UINamingContainer#getSeparatorChar(FacesContext)} der ID vorangestellt
-	 * @return eine voll qualifizierte ID
+	 * Returns the fully qualified (absolute) ID of {@code component}.
+	 * @param context a {@link FacesContext}
+	 * @param component {@link UIComponent} to return the ID for
+	 * @param absolute if {@code true} {@link UINamingContainer#getSeparatorChar(FacesContext)} is prepended (to indicate an absolute path)
+	 * @return a fully qualified ID
 	 */
 	public static String getFullyQualifiedComponentId(FacesContext context, UIComponent component, boolean absolute) {
 		if (component == null) {
