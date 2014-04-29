@@ -15,13 +15,7 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>edu-it</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>edu-it</artifactId>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
@@ -33,6 +27,32 @@
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
+		</dependency>
+		
+		<!-- testing -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>edu-it</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- the following dependencies have to be declared -->
+		<!-- as of http://jira.codehaus.org/browse/MNG-1378 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
