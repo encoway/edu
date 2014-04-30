@@ -24,7 +24,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 
 /**
- * {@link SystemEventListener} which tracks on which event a {@link UIComponent} wants to be updated.
+ * {@link SystemEventListener} mapping event names to registered {@link UIComponent}'s IDs.
  */
 public class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
 	
