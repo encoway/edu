@@ -2,13 +2,13 @@
  * Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
  * 
  * EDU does so by allowing components to request being re-rendered/updated based on an **event**.
- * An event in terms of EDU is just a name through which it can be referenced by a triggering component, e.g. *configuration-changed*.
+ * An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., *configuration-changed*.
  * 
  * ### Motivation
  * 
  * Given there is a a panel showing the time of the last change of a configuration interface
  * `<h:outputText id="lastChangeText" value="#{config.lastChangeDate}" />`.
- * Whenever the configuration is changed through some other component, e.g. `configSelect`
+ * Whenever the configuration is changed through some other component e.g., `configSelect`
  * it has to know all the components requiring an update and trigger it:
  * 
  * ```xhtml
@@ -18,7 +18,7 @@
  * ```
  * 
  * Composed component IDs like `:fully:qualified:id:of:lastChangeText` are fragile and
- * break e.g. if the parent components are restructured.
+ * break e.g., if the parent components are restructured.
  * 
  * EDU takes the responsibility from the trigger to know which component needs to be updated.
  * 
