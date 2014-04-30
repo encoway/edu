@@ -3,7 +3,7 @@
 
 	<groupId>com.encoway</groupId>
 	<artifactId>edu-parent</artifactId>
-	<version>1.5.2</version>
+	<version>1.5.3-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 
@@ -40,7 +40,7 @@
 	<scm>
 		<url>http://${scm.host}:${scm.port.http}/projects/oss/repos/edu/browse</url>
 		<developerConnection>scm:git:ssh://git@${scm.host}:${scm.port.ssh}/oss/edu.git</developerConnection>
-		<tag>v1.5.2</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
