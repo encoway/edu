@@ -25,7 +25,7 @@ break e.g., if the parent components are restructured.
 EDU takes the responsibility from the trigger to know which component needs to be updated.
 
 ### Usage
-*
+
 ```xhtml
 <h:form id="someForm">
     <h:panelGroup id="somePanel" layout="block" updateOn="something-changed">
