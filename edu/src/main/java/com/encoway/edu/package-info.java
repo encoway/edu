@@ -1,5 +1,6 @@
 /**
  * Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
+ * 
  * EDU does so by allowing components to request being re-rendered/updated based on an **event**.
  * An event in terms of EDU is just a name through which it can be referenced by a triggering component, e.g. *configuration-changed*.
  * 
@@ -73,7 +74,7 @@
  * 
  * ### Configuration
  * 
- * The following things may be configured through `context-param`s in a `web.xml`
+ * The following things may be configured through `<context-param>` in a `web.xml` or an equivalent:
  * 
  * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_CONTEXT_PARAM}
  * : Overrides the attribute used in components to register for events
@@ -83,5 +84,8 @@
  * 
  * @see com.encoway.edu.EventDrivenUpdatesListener
  * @see com.encoway.edu.EventDrivenUpdatesListener.EventListenerMap#get(Object)
+ * 
+ * @see "[Observer Pattern](http://en.wikipedia.org/wiki/Observer_pattern)"
+ * @see "[Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control)"
  */
 package com.encoway.edu;
