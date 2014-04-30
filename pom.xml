@@ -27,7 +27,7 @@
 
 	<scm>
 		<url>http://${scm.host}:${scm.port.http}/projects/oss/repos/edu/browse</url>
-		<developerConnection>ssh://git@${scm.host}:${scm.port.ssh}/oss/edu.git</developerConnection>
+		<developerConnection>scm:git:ssh://git@${scm.host}:${scm.port.ssh}/oss/edu.git</developerConnection>
 	</scm>
 
 	<properties>
