@@ -31,8 +31,8 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	private static final String CONTEXT_PARAM_PREFIX = "com.encoway.edu";
 	
 	/**
-	 * Name of the <code>context-param</code> to override the listener attribute,
-	 * defaults to <code>updateOn</code>.
+	 * Name of the `context-param` to override the listener attribute,
+	 * defaults to `updateOn`.
 	 */
 	public static final String EVENTS_ATTRIBUTE_CONTEXT_PARAM = CONTEXT_PARAM_PREFIX + ".LISTENER_ATTRIBUTE";
 
@@ -111,14 +111,15 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 		}
 		
 		/**
-		 * Returns a space separated list of component IDs of components associated with <code>events</code>.
+		 * Returns a space separated list of component IDs of components associated with `events`.
 		 * 
-		 * <p>If <code>events</code> is a {@link String} the following format is expected: <code>event-a[[,] event-b][|<strong>default-value</strong>]</code><br>
-		 * Where <code><strong>default-value</strong></code> is returned if no matching event is found and defaults to <code>@none</code>.</p>
+		 * If `events` is a {@link String} the following format is expected: `event-a[[,] event-b][|default-value]`
 		 * 
-		 * @return the list of component IDs associated with <code>events</code> or a default value (see above)
+		 * Where **`default-value`** is returned if no matching event is found and defaults to `@none`.
+		 * 
+		 * @return the list of component IDs associated with `events` or a default value (see above)
 		 * @param events either {@link String} (see above) or an {@link Iterable} of Strings
-		 * @throws IllegalArgumentException if <code>events</code> is not of the possible types
+		 * @throws IllegalArgumentException if `events` is not of the possible types
 		 * 
 		 * @see #get(String, String)
 		 * @see #get(Iterable, String)
@@ -135,11 +136,11 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 		}
 		
 		/**
-		 * Returns a space separated list of component IDs of components registered for at least one the <code>events</code>.
+		 * Returns a space separated list of component IDs of components registered for at least one the `events`.
 		 * 
 		 * @param events a collection of events
-		 * @param defaultValue will be returned if no component is registered for one of the <code>events</code>
-		 * @return a space separated list of fully qualified component IDs or <code>defaultValue</code>
+		 * @param defaultValue will be returned if no component is registered for one of the `events`
+		 * @return a space separated list of fully qualified component IDs or `defaultValue`
 		 */
 		public String get(Iterable<String> events, String defaultValue) {
 			if (events != null && !Iterables.isEmpty(events)) {
@@ -161,11 +162,11 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 		}
 		
 		/**
-		 * Returns a space separated list of component IDs of components registered for at least one the <code>events</code>.
+		 * Returns a space separated list of component IDs of components registered for at least one the `events`.
 		 * 
 		 * @param events a comma/space separated list of event names
-		 * @param defaultValue will be returned if no component is registered for one of the <code>events</code>
-		 * @return a space separated list of fully qualified component IDs or <code>defaultValue</code>
+		 * @param defaultValue will be returned if no component is registered for one of the `events`
+		 * @return a space separated list of fully qualified component IDs or `defaultValue`
 		 */
 		public String get(String events, String defaultValue) {
 			if (!Strings.isNullOrEmpty(events)) {
@@ -188,8 +189,8 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	public static class EventListenerMapELResolver extends ELResolver {
 		
 		/**
-		 * Name of the <code>context-param</code> to override the EL variable name through which the EDU map is accessible,
-		 * defaults to <code>edu</code>.
+		 * Name of the `context-param` to override the EL variable name through which the EDU map is accessible,
+		 * defaults to `edu`.
 		 */
 		public static final String EVENT_LISTENER_MAP_CONTEXT_PARAM = CONTEXT_PARAM_PREFIX + ".EVENT_LISTENER_MAP_NAME";
 	

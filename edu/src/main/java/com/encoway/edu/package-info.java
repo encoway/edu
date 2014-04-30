@@ -1,86 +1,85 @@
 /**
  * Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
- * The approach is known as <a href="http://en.wikipedia.org/w/index.php?title=Observer_pattern&oldid=605721456">ovserver pattern</a>.
- * EDU provides a convenient way to put it to use in a JSF component tree.
+ * EDU does so by allowing components to request being re-rendered/updated based on an **event**.
+ * An event in terms of EDU is just a name through which it can be referenced by a triggering component, e.g. *configuration-changed*.
  * 
- * <p><strong>Motivation</strong></p>
+ * ### Motivation
  * 
  * Given there is a a panel showing the time of the last change of a configuration interface
- * <code>&lt;h:outputText id="<em>lastChangeText</em>" value="#{config.lastChangeDate}" /&gt;</code>.
- * Whenever the configuration is changed through some other component, e.g. <code>configSelect</code>
+ * `<h:outputText id="lastChangeText" value="#{config.lastChangeDate}" />`.
+ * Whenever the configuration is changed through some other component, e.g. `configSelect`
  * it has to know all the components requiring an update and trigger it:
  * 
- * <pre>
- * &lt;h:selectOneMenu id="configSelect"&gt;
- *     &lt;f:ajax event="change" <strong>render</strong>=":fully:qualified:id:of:<em>lastChangeText</em> :yet:another:component" /&gt;
- * &lt;/h:form&gt;
- * </pre>
+ * ```xhtml
+ * <h:selectOneMenu id="configSelect">
+ *     <f:ajax event="change" render=":fully:qualified:id:of:lastChangeText :yet:another:component" />
+ * </h:form>
+ * ```
  * 
- * Composed component IDs like <code>:fully:qualified:id:of:<em>lastChangeText</em></code> are fragile and
+ * Composed component IDs like `:fully:qualified:id:of:lastChangeText` are fragile and
  * break e.g. if the parent components are restructured.
  * 
- * <p>EDU takes the responsibility from the trigger to know which component needs to be updated.</p>
+ * EDU takes the responsibility from the trigger to know which component needs to be updated.
  * 
- * <p><strong>Usage</strong></p>
+ * ### Usage
  *
- * <pre>
- * &lt;h:form id="someForm"&gt;
- *     &lt;h:panelGroup id="somePanel" layout="block" <strong>updateOn</strong>="<em>something-changed</em>"&gt;
- *         &hellip;
- *     &lt;/h:panelGroup&gt;
- * &lt;/h:form&gt;
- * </pre>
+ * ```xhtml
+ * <h:form id="someForm">
+ *     <h:panelGroup id="somePanel" layout="block" updateOn="something-changed">
+ *         ...
+ *     </h:panelGroup>
+ * </h:form>
+ * ```
  * 
- * Now any component triggering '<code><em>something-changed</em></code>' can obtain a list of component IDs
- * of components registered for '<code><em>something-changed</em></code>' from the <code>edu</code> map:
+ * Now any component triggering `something-changed` can obtain a list of component IDs
+ * of components registered for `something-changed` from the `edu` map:
  * 
- * <pre>
- * &lt;h:commandLink&gt;
- *     &lt;f:ajax render="#{<strong>edu</strong>['<em>something-changed</em> something-else-changed']}" /&gt;
- * &lt;/h:commandLink&gt;
- * </pre>
+ * ```xhtml
+ * <h:commandLink>
+ *     <f:ajax render="#{edu['something-changed something-else-changed']}" />
+ * </h:commandLink>
+ * ```
  * 
- * <p><strong>Chaining Events</strong></p>
+ * #### Chaining Events
  * 
  * It is possible to register one component for multiple events:
  * 
- * <pre>
- * &lt;h:outputText id="someText" layout="block" <strong>updateOn</strong>="<em>something-changed some-global-change</em>" /&gt;
- * </pre>
+ * ```xhtml
+ * <h:outputText id="someText" layout="block" updateOn="something-changed some-global-change" />
+ * ```
  * 
  * Likewise a component can "trigger" multiple events:
  * 
- * <pre>
- * &lt;h:commandLink&gt;
- *     &lt;f:ajax render="#{<strong>edu</strong>['<em>something-changed something-else-changed</em>']}" /&gt;
- * &lt;/h:commandLink&gt;
- * </pre>
+ * ```xhtml
+ * <h:commandLink>
+ *     <f:ajax render="#{edu['something-changed something-else-changed']}" />
+ * </h:commandLink>
+ * ```
  * 
- * <p><strong>Default Value</strong></p>
+ * #### Default Value
  * 
- * In case there's no component registered for an event the EDU map returns a default value: <code>@none</code>.
+ * In case there's no component registered for an event the EDU map returns a default value: `@none`.
  * This value can be overridden on a trigger basis:
  * 
- * <pre>
- * &lt;h:commandLink&gt;
- *     &lt;f:ajax render="#{<strong>edu</strong>['some-event-no-one-cares-about<em>|:default:component:id</em>']}" /&gt;
- * &lt;/h:commandLink&gt;
- * </pre>
+ * ```xhtml
+ * <h:commandLink>
+ *     <f:ajax render="#{edu['some-event-no-one-cares-about|:default:component:id']}" />
+ * </h:commandLink>
+ * ```
  * 
- * This would result in the component with the ID <code><em>:default:component:id</em></code> to be updated.
- * The default value can be everything that would be valid in place of the EL expression (<code>#{edu['&hellip;']}</code>)
- * including special identifiers such as <code>@this</code>, <code>@all</code> etc.
+ * This would result in the component with the ID `:default:component:id` to be updated.
+ * The default value can be everything that would be valid in place of the EL expression (`#{edu['...']}`)
+ * including special identifiers such as `@this`, `@all` etc.
  * 
- * <p><strong>Configuration</strong></p>
+ * ### Configuration
  * 
- * The following things may be configured through <code>context-param</code>s in a <code>web.xml</code>
+ * The following things may be configured through `context-param`s in a `web.xml`
  * 
- * <dl>
- * <dt>{@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_CONTEXT_PARAM}</dt>
- * <dd>Overrides the attribute used in components to register for events<br>
- * <dt>{@value com.encoway.edu.EventDrivenUpdatesListener.EventListenerMapELResolver#EVENT_LISTENER_MAP_CONTEXT_PARAM}</dt>
- * <dd>Overrides the name of the EDU map<br>
- * </dl>
+ * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_CONTEXT_PARAM}
+ * : Overrides the attribute used in components to register for events
+ * 
+ * {@value com.encoway.edu.EventDrivenUpdatesListener.EventListenerMapELResolver#EVENT_LISTENER_MAP_CONTEXT_PARAM}
+ * : Overrides the name of the EDU map
  * 
  * @see com.encoway.edu.EventDrivenUpdatesListener
  * @see com.encoway.edu.EventDrivenUpdatesListener.EventListenerMap#get(Object)
