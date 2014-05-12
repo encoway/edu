@@ -5,19 +5,12 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
     					http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     					
-    <name>event_driven_updates</name>
+    <name>event_driven_updates_integration_tests</name>
     
     <ordering>
     	<before>
     		<others/>
     	</before>
     </ordering>
-
-	<application>
-		<system-event-listener>
-			<system-event-listener-class>com.encoway.edu.EventDrivenUpdatesListener</system-event-listener-class>
-			<system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
-		</system-event-listener>
-	</application>
 
 </faces-config>
