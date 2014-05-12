@@ -1,6 +1,7 @@
 package com.encoway.edu;
 
 import java.beans.FeatureDescriptor;
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -96,8 +97,13 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 	/**
 	 * A {@link Map} mapping event names to {@link UIComponent} IDs. 
 	 */
-	public static class EventListenerMap extends AbstractMap<String, String> {
-		
+	public static class EventListenerMap extends AbstractMap<String, String> implements Serializable {
+
+		/**
+		 * @since 1.5.4
+		 */
+		private static final long serialVersionUID = 2716308243361339413L;
+
 		private static final String DEFAULT_VALUE = "@none";
 		
 		private final Map<String, Set<String>> delegate = new HashMap<>();
