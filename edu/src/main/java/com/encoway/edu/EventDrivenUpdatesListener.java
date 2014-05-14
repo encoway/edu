@@ -20,6 +20,7 @@ import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
@@ -185,6 +186,11 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
 		@Override
 		public Set<Map.Entry<String, String>> entrySet() {
 			throw new UnsupportedOperationException("this map is get-only");
+		}
+		
+		@Override
+		public String toString() {
+			return Objects.toStringHelper(this).add("delegate", delegate).toString();
 		}
 		
 	}
