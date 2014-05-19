@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.encoway</groupId>
 	<artifactId>edu-parent</artifactId>
-	<version>1.5.5-SNAPSHOT</version>
+	<version>1.5.5</version>
 
 	<packaging>pom</packaging>
 
@@ -43,7 +42,7 @@
 	<scm>
 		<url>http://${scm.host}:${scm.port.http}/projects/oss/repos/edu/browse</url>
 		<developerConnection>scm:git:ssh://git@${scm.host}:${scm.port.ssh}/oss/edu.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v1.5.5</tag>
 	</scm>
 
 	<properties>

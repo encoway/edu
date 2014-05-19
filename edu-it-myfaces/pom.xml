@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.encoway</groupId>
 		<artifactId>edu-parent</artifactId>
-		<version>1.5.5-SNAPSHOT</version>
+		<version>1.5.5</version>
 	</parent>
 	<artifactId>edu-it-myfaces</artifactId>
 	<packaging>war</packaging>
