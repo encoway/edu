@@ -73,3 +73,7 @@ This value can be overridden on a trigger basis:
 This would result in the component with the ID `:default:component:id` to be updated.
 The default value can be everything that would be valid in place of the EL expression (`#{edu['...']}`)
 including special identifiers such as `@this`, `@all` etc.
+
+## License
+
+EDU is licensed under Apache 2.0.
