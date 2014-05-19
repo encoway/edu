@@ -6,7 +6,7 @@ Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
 EDU does so by allowing components to request being re-rendered/updated based on an **event**.
 An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., *configuration-changed*.
 
-For usage instructions see [artifact documentation](edu/).
+For usage instructions see module `edu`.
 
 ## Integration
 
