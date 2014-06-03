@@ -8,7 +8,7 @@ An event in terms of EDU is just a name through which it can be referenced by a 
 
 ## Motivation
 
-Given there is a a panel showing the time of the last change of a configuration interface
+Given there is a panel showing the time of the last change of a configuration interface
 `<h:outputText id="lastChangeText" value="#{config.lastChangeDate}" />`.
 Whenever the configuration is changed through some other component e.g., `configSelect`
 it has to know all the components requiring an update and trigger it:
@@ -39,7 +39,7 @@ of components registered for `something-changed` from the `edu` map:
 
 ```xhtml
 <h:commandLink>
-    <f:ajax render="#{edu['something-changed something-else-changed']}" />
+    <f:ajax render="#{edu['something-changed']}" />
 </h:commandLink>
 ```
 
@@ -62,7 +62,7 @@ Likewise a component can "trigger" multiple events:
 ### Default Value
 
 In case there's no component registered for an event the EDU map returns a default value: `@none`.
-This value can be overridden on a trigger basis:
+This value can be overridden on a per-trigger basis:
 
 ```xhtml
 <h:commandLink>
@@ -73,6 +73,14 @@ This value can be overridden on a trigger basis:
 This would result in the component with the ID `:default:component:id` to be updated.
 The default value can be everything that would be valid in place of the EL expression (`#{edu['...']}`)
 including special identifiers such as `@this`, `@all` etc.
+
+## Configuration
+
+The following things may be configured through `<context-param>` in a `web.xml` or an equivalent:
+
+**com.encoway.edu.LISTENER_ATTRIBUTE**: Overrides the attribute used in components to register for events (default: `updateOn`)
+ 
+**com.encoway.edu.EVENT_LISTENER_MAP_NAME**: Overrides the name of the EDU map (default: `edu`)
 
 ## License
 
