@@ -1,5 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
+	</parent>
 
 	<groupId>com.encoway</groupId>
 	<artifactId>edu-parent</artifactId>
@@ -9,13 +16,21 @@
 
 	<name>Event Driven Updates</name>
 	<description>Parent POM for edu-artifacts</description>
-	
+
 	<inceptionYear>2014</inceptionYear>
 
 	<organization>
 		<name>encoway GmbH</name>
 		<url>http://www.encoway.de</url>
 	</organization>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<modules>
 		<module>edu</module>
@@ -24,38 +39,21 @@
 		<module>edu-it-mojarra</module>
 	</modules>
 
-	<distributionManagement>
-		<repository>
-			<id>encoway-releases</id>
-			<name>Encoway Release Repository</name>
-			<url>http://zde357:9090/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>encoway-snapshots</id>
-			<name>Encoway Snapshot Repository</name>
-			<url>http://zde357:9090/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<url>https://jira.encoway-services.de/browse/OSS</url>
+	<url>https://github.com/encoway/edu/issues</url>
 
 	<scm>
-		<url>http://${scm.host}:${scm.port.http}/projects/oss/repos/edu/browse</url>
-		<developerConnection>scm:git:ssh://git@${scm.host}:${scm.port.ssh}/oss/edu.git</developerConnection>
+		<url>https://github.com/encoway/edu</url>
+		<connection>scm:git:git@github.com:encoway/edu.git</connection>
+		<developerConnection>scm:git:git@github.com:encoway/edu.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
-		<scm.host>hb023</scm.host>
-		<scm.port.ssh>7999</scm.port.ssh>
-		<scm.port.http>7990</scm.port.http>
-
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<java.version>1.7</java.version>
-		<test.server.port>8085</test.server.port>
-		<test.server.url>http://localhost:${test.server.port}/</test.server.url>
+		<test.server.url>http://localhost:${test.server.http.port}/</test.server.url>
 	</properties>
 
 	<developers>
@@ -135,6 +133,26 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.8</version>
+					<executions>
+						<execution>
+							<id>determine-test-server-ports</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>reserve-network-port</goal>
+							</goals>
+							<configuration>
+								<portNames>
+									<portName>test.server.http.port</portName>
+									<portName>test.server.stop.port</portName>
+								</portNames>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
 						<source>${java.version}</source>
@@ -163,9 +181,9 @@
 					<configuration>
 						<scanIntervalSeconds>10</scanIntervalSeconds>
 						<httpConnector>
-							<port>${test.server.port}</port>
+							<port>${test.server.http.port}</port>
 						</httpConnector>
-						<stopPort>8005</stopPort>
+						<stopPort>${test.server.stop.port}</stopPort>
 						<stopKey>STOP</stopKey>
 						<contextPath>/</contextPath>
 					</configuration>

@@ -22,7 +22,7 @@ Add the folowing dependency to the `<dependencies>` section in a POM:
 <dependency>
     <groupId>com.encoway</groupId>
     <artifactId>edu</artifactId>
-    <version>1.5.5</version>
+    <version>X.Y.Z</version>
 </dependency>
 ```
 
