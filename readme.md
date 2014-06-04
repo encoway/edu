@@ -1,6 +1,8 @@
 Event Driven Updates
 ====================
 
+[![Build Status](https://travis-ci.org/encoway/edu.svg?branch=master)](https://travis-ci.org/encoway/edu)
+
 Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
 
 EDU does so by allowing components to request being re-rendered/updated based on an **event**.
