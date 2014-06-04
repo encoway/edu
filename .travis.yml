@@ -1,7 +1,5 @@
 language: java
-branches:
-  except:
-  - travis
+script: mvn clean deploy --settings .travis/settings.xml
 deploy:
   provider: releases
   api_key:
@@ -16,4 +14,3 @@ env:
   global:
   - secure: dCMqWDs+Hoo//0ShVet0p3akVaYYb21VDIOp+St+k1hQaygiPWPR+1pEDlQ+JYOWMW+zoP03rrxE+AQW530Xom5prMqgkwsvXVFLRmanR8uPN5H3VsGgxRLSB+DVcUrjEg37uxpyCQaVNCOtxMfk+ossiYAH+8qNtMEILLP7gZA=
   - secure: ee7pKK7GPPQ/XSrRk1zUolYxPdzFrBjZw6e1/vHNvoot4pJ7ve1BO87E276T2JaFAI5oM18ON58M2x4jDSaKdE4dGivUMsgYF+9Qd4HyDhrMkA6Elpqel5rT/F5o6kWtqp+kfBiasnoFiXTqf2kxFUgDMSWQ/dwqTBX4+62eHXQ=
-after_success: mvn clean deploy --settings .sonatype/settings.xml
