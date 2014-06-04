@@ -1,1 +1,19 @@
 language: java
+branches:
+  except:
+  - travis
+deploy:
+  provider: releases
+  api_key:
+    secure: SB+TrikeBUEAySw70MhEywNnncz1DOhDRvSYMCZZZJIEKV2nN01tKbkOYU7PwSTBSmA5BLUECF2O6OqL9faAFPCUbOMUyxrq7M9iRsWl8ovwXAppMS3XvDQGmWbxzk39yo0ieNuj7QupCmKIeLL9Wks03z0Rywp0D4ZMCNfEOWM=
+  file: edu/target/edu.jar
+  skip_cleanup: true
+  on:
+    repo: encoway/edu
+    branch: master
+    tags: true
+env:
+  global:
+  - secure: dCMqWDs+Hoo//0ShVet0p3akVaYYb21VDIOp+St+k1hQaygiPWPR+1pEDlQ+JYOWMW+zoP03rrxE+AQW530Xom5prMqgkwsvXVFLRmanR8uPN5H3VsGgxRLSB+DVcUrjEg37uxpyCQaVNCOtxMfk+ossiYAH+8qNtMEILLP7gZA=
+  - secure: ee7pKK7GPPQ/XSrRk1zUolYxPdzFrBjZw6e1/vHNvoot4pJ7ve1BO87E276T2JaFAI5oM18ON58M2x4jDSaKdE4dGivUMsgYF+9Qd4HyDhrMkA6Elpqel5rT/F5o6kWtqp+kfBiasnoFiXTqf2kxFUgDMSWQ/dwqTBX4+62eHXQ=
+after_success: mvn clean deploy --settings .sonatype/settings.xml
