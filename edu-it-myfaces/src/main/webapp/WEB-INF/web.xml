@@ -34,5 +34,9 @@
 		<servlet-name>JSF</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+    
+    <welcome-file-list>
+        <welcome-file>demo.xhtml</welcome-file>
+    </welcome-file-list>
 	
 </web-app>
