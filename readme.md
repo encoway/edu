@@ -10,7 +10,7 @@ An event in terms of EDU is just a name through which it can be referenced by a 
 
 ## Usage
 
-For usage instructions see module `edu`.
+For usage instructions see module [`edu`](edu).
 
 ## Integration
 
@@ -28,7 +28,15 @@ Add the folowing dependency to the `<dependencies>` section in a POM:
 </dependency>
 ```
 
-The artifacts (releases and snapshots) are hosted by [Sonatype|http://central.sonatype.org/] at `https://oss.sonatype.org/content/groups/public` so make sure this is available as a repository.
+The artifacts (releases and snapshots) are hosted by [Sonatype](http://central.sonatype.org/) at `https://oss.sonatype.org/content/groups/public` so make sure this is available as a repository:
+
+```xml
+<repository>  
+    <id>Sonatype repository</id>  
+    <name>Sonatype's Maven repository</name>  
+    <url>http://oss.sonatype.org/content/groups/public</url>  
+</repository>
+```
 
 ## License
 
