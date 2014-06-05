@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>EDU - Event Driven Updates by encoway</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>EDU - Event Driven Updates</h1>
+        <p>Decoupling JSF Components</p>
+
+        <p class="view"><a href="https://github.com/encoway/edu">View the Project on GitHub <small>encoway/edu</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/encoway/edu/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/encoway/edu/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/encoway/edu">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="event-driven-updates" class="anchor" href="#event-driven-updates"><span class="octicon octicon-link"></span></a>Event Driven Updates</h1>
+
+<p><a href="https://travis-ci.org/encoway/edu"><img src="https://travis-ci.org/encoway/edu.svg?branch=master" alt="Build Status"></a></p>
+
+<p>Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.</p>
+
+<p>EDU does so by allowing components to request being re-rendered/updated based on an <strong>event</strong>.
+An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., <em>configuration-changed</em>.</p>
+
+<h2>
+<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h2>
+
+<p>There are two projects used for integration testing based on <a href="https://github.com/encoway/edu/tree/master/edu-it-myfaces">MyFaces</a> and <a href="https://github.com/encoway/edu/tree/master/edu-it-mojarra">Mojarra</a>. Each can be launched running the maven command <code>mvn jetty:run</code> from within their module folder.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>For usage instructions see module <a href="https://github.com/encoway/edu/tree/master/edu">edu</a>.</p>
+
+<h2>
+<a name="integration" class="anchor" href="#integration"><span class="octicon octicon-link"></span></a>Integration</h2>
+
+<p>In order to use EDU in a web application the <code>edu.jar</code> must be present on the classpath.</p>
+
+<h3>
+<a name="maven" class="anchor" href="#maven"><span class="octicon octicon-link"></span></a>Maven</h3>
+
+<p>Add the folowing dependency to the <code>&lt;dependencies&gt;</code> section in a POM:</p>
+
+<div class="highlight highlight-xhtml"><pre><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.encoway<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>edu<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>X.Y.Z<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<p>The artifacts (releases and snapshots) are hosted by <a href="http://central.sonatype.org/">Sonatype</a> at <code>https://oss.sonatype.org/content/groups/public</code> so make sure this is available as a repository:</p>
+
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;repository&gt;</span>  
+    <span class="nt">&lt;id&gt;</span>Sonatype repository<span class="nt">&lt;/id&gt;</span>  
+    <span class="nt">&lt;name&gt;</span>Sonatype's Maven repository<span class="nt">&lt;/name&gt;</span>  
+    <span class="nt">&lt;url&gt;</span>http://oss.sonatype.org/content/groups/public<span class="nt">&lt;/url&gt;</span>  
+<span class="nt">&lt;/repository&gt;</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>EDU is licensed under Apache 2.0.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/encoway">encoway</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
