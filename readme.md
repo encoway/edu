@@ -22,7 +22,7 @@ In order to use EDU in a web application the `edu.jar` must be present on the cl
 
 ### Maven
 
-Add the folowing dependency to the `<dependencies>` section in a POM:
+Add the following dependency to the `<dependencies>` section in a POM:
 
 ```xhtml
 <dependency>
