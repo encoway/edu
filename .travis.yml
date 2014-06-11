@@ -1,10 +1,13 @@
 language: java
-script: mvn clean deploy --settings .travis/settings.xml
+script: .travis/maven.sh
 deploy:
   provider: releases
   api_key:
     secure: SB+TrikeBUEAySw70MhEywNnncz1DOhDRvSYMCZZZJIEKV2nN01tKbkOYU7PwSTBSmA5BLUECF2O6OqL9faAFPCUbOMUyxrq7M9iRsWl8ovwXAppMS3XvDQGmWbxzk39yo0ieNuj7QupCmKIeLL9Wks03z0Rywp0D4ZMCNfEOWM=
-  file: edu/target/edu.jar
+  file:
+    - "edu/target/edu.jar"
+    - "edu/target/edu-sources.jar"
+    - "edu/target/edu-javadoc.jar"
   skip_cleanup: true
   on:
     repo: encoway/edu
