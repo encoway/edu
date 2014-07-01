@@ -12,6 +12,11 @@ public class DemoModel<V> {
 
     private V value;
 
+    /**
+     * Initializes a {@link DemoModel}.
+     * @param name the name
+     * @param value the value
+     */
     public DemoModel(String name, V value) {
         this.name = name;
         this.value = this.initialValue = value;
