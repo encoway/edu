@@ -7,5 +7,5 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ DemoIT.class })
 public class ITSuite {
-	
+
 }

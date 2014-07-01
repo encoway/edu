@@ -10,11 +10,11 @@ import com.google.common.io.Resources;
 @ApplicationScoped
 @ManagedBean(name = "pages")
 public class Pages {
-	
-	public String getFileContents(String path) throws Exception {
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		Resources.copy(Pages.class.getResource(path), outputStream);
-		return new String(outputStream.toByteArray(), "UTF-8");
-	}
+
+    public String getFileContents(String path) throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Resources.copy(Pages.class.getResource(path), outputStream);
+        return new String(outputStream.toByteArray(), "UTF-8");
+    }
 
 }
