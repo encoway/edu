@@ -1,5 +1,9 @@
 package com.encoway.edu.model;
 
+/**
+ * A simple model.
+ * @param <V> value type
+ */
 public class DemoModel<V> {
 
     private String name;
@@ -29,6 +33,9 @@ public class DemoModel<V> {
         this.value = value;
     }
 
+    /**
+     * Resets the value to the initial value.
+     */
     public void reset() {
         setValue(initialValue);
     }

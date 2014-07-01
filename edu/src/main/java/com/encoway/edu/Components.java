@@ -63,6 +63,11 @@ class Components {
         return absolute ? separatorChar + fqid : fqid;
     }
 
+    /**
+     * Returns the fully qualified (absolute) ID of {@code component}.
+     * @param component {@link UIComponent} to return the ID for
+     * @return a fully qualified ID
+     */
     public static String getFullyQualifiedComponentId(UIComponent component) {
         return getFullyQualifiedComponentId(FacesContext.getCurrentInstance(), component);
     }
