@@ -22,7 +22,7 @@ In order to use EDU in a web application the `edu.jar` must be present on the cl
 
 ### Maven
 
-Add the following dependency to the `<dependencies>` section in a POM:
+Add the following dependency to the `<dependencies>` section of your `pom.xml`:
 
 ```xhtml
 <dependency>
@@ -32,13 +32,20 @@ Add the following dependency to the `<dependencies>` section in a POM:
 </dependency>
 ```
 
-The artifacts (releases and snapshots) are hosted by [Sonatype](http://central.sonatype.org/) at `https://oss.sonatype.org/content/groups/public` so make sure this is available as a repository:
+Releases are hosted on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.encoway). Additionally 
+releases and snapshots are hosted by [Sonatype](http://central.sonatype.org/) at `https://oss.sonatype.org/content/groups/public`. In order to use snapshots make sure their repository is defined in the `<repositories>` section of your `pom.xml`:
 
 ```xml
 <repository>  
     <id>Sonatype repository</id>  
     <name>Sonatype's Maven repository</name>  
     <url>http://oss.sonatype.org/content/groups/public</url>  
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
 </repository>
 ```
 
