@@ -4,13 +4,13 @@ Event Driven Updates
 Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
 
 EDU does so by allowing components to request being re-rendered/updated based on an **event**.
-An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., *configuration-changed*.
+An event in terms of EDU is just a name through which it can be referenced by a triggering component, for example, *configuration-changed*.
 
 ## Motivation
 
 Given there is a panel showing the time of the last change of a configuration interface
 `<h:outputText id="lastChangeText" value="#{config.lastChangeDate}" />`.
-Whenever the configuration is changed through some other component e.g., `configSelect`
+Whenever the configuration is changed through some other component, for instance, `configSelect`
 it has to know all the components requiring an update and trigger it:
 
 ```xhtml
@@ -20,7 +20,7 @@ it has to know all the components requiring an update and trigger it:
 ```
 
 Composed component IDs like `:fully:qualified:id:of:lastChangeText` are fragile and
-break e.g., if the parent components are restructured.
+might break if the parent components are restructured.
 
 EDU takes the responsibility from the trigger to know which component needs to be updated.
 
@@ -76,11 +76,17 @@ including special identifiers such as `@this`, `@all` etc.
 
 ## Configuration
 
-The following things may be configured through `<context-param>` in a `web.xml` or an equivalent:
+In general EDU works out of the box and does not need any further configuration. However, if either the attribute `updateOn` or the variable name `edu` is already in use these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:
 
-**com.encoway.edu.LISTENER_ATTRIBUTE**: Overrides the attribute used in components to register for events (default: `updateOn`)
+**com.encoway.edu.LISTENER_ATTRIBUTE**:  
+Overrides the attribute used in components to register for events (default: `updateOn`)
  
-**com.encoway.edu.EVENT_LISTENER_MAP_NAME**: Overrides the name of the EDU map (default: `edu`)
+**com.encoway.edu.EVENT_LISTENER_MAP_NAME**:  
+Overrides the name of the EDU map (default: `edu`)
+
+## JavaDoc
+
+Anyone interested in the inner workings of EDU may also have a look at the [generated documentation](http://encoway.github.io/edu/javadoc/current "latest JavaDoc"). 
 
 ## License
 
