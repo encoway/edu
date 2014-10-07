@@ -12,6 +12,9 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Unit test for {@link DemoController}.
+ */
 public class DemoControllerTest {
 
     private static final int UPDATED_INT_VALUE = 1;
