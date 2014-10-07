@@ -244,6 +244,11 @@
                             <version>1.1.1</version>
                         </docletArtifact>
                         <useStandardDocletOptions>true</useStandardDocletOptions>
+                        <author>${project.company.name}</author>
+                        <doctitle>${project.name} ${project.version} API</doctitle>
+                        <windowtitle>${project.name} ${project.version} API</windowtitle>
+                        <header><![CDATA[${project.name} ${project.version} API]]></header>
+                        <footer><![CDATA[${project.name} ${project.version} API]]></footer>
                     </configuration>
                 </plugin>
                 <plugin>

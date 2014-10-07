@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2014 encoway GmbH
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ *          http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
 /**
  * Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
  * EDU does so by allowing components to request being re-rendered/updated based on an **event**.
- * An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., *configuration-changed*.
+ * An event in terms of EDU is just a name through which it can be referenced by a triggering component, for example, *configuration-changed*.
  * ### Motivation
  * Given there is a panel showing the time of the last change of a configuration interface
  * `<h:outputText id="lastChangeText" value="#{config.lastChangeDate}" />`.
- * Whenever the configuration is changed through some other component e.g., `configSelect`
+ * Whenever the configuration is changed through some other component, for instance, `configSelect`
  * it has to know all the components requiring an update and trigger it:
  * ```xhtml
  * <h:selectOneMenu id="configSelect">
@@ -28,7 +28,7 @@
  * </h:form>
  * ```
  * Composed component IDs like `:fully:qualified:id:of:lastChangeText` are fragile and
- * break e.g., if the parent components are restructured.
+ * might break if the parent components are restructured.
  * EDU takes the responsibility from the trigger to know which component needs to be updated.
  * ### Usage
  * ```xhtml
@@ -67,10 +67,17 @@
  * This would result in the component with the ID `:default:component:id` to be updated.
  * The default value can be everything that would be valid in place of the EL expression (`#{edu['...']}`)
  * including special identifiers such as `@this`, `@all` etc.
+ * 
  * ### Configuration
- * The following things may be configured through `<context-param>` in a `web.xml` or an equivalent:
- * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_CONTEXT_PARAM} : Overrides the attribute used in components to register for events
- * {@value com.encoway.edu.EventDrivenUpdatesListener.EventListenerMapELResolver#EVENT_LISTENER_MAP_CONTEXT_PARAM} : Overrides the name of the EDU map
+ * In general EDU works out of the box and does not need any further configuration.
+ * However, if either the attribute `updateOn` or the variable name `edu` is already in use
+ * these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:
+ * 
+ * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_CONTEXT_PARAM}:  
+ * Overrides the attribute used in components to register for events
+ * 
+ * {@value com.encoway.edu.EventDrivenUpdatesListener.EventListenerMapELResolver#EVENT_LISTENER_MAP_CONTEXT_PARAM}:  
+ * Overrides the name of the EDU map
  * 
  * @see com.encoway.edu.EventDrivenUpdatesListener
  * @see com.encoway.edu.EventDrivenUpdatesListener.EventListenerMap#get(Object)
