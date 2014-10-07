@@ -1,10 +1,18 @@
 package com.encoway.edu.model;
 
+import java.io.Serializable;
+
 /**
  * A simple model.
+ * 
  * @param <V> value type
  */
-public class DemoModel<V> {
+public class DemoModel<V extends Serializable> implements Serializable {
+
+    /**
+     * @since 1.5.7
+     */
+    private static final long serialVersionUID = 1659999273691357169L;
 
     private String name;
 
@@ -14,6 +22,7 @@ public class DemoModel<V> {
 
     /**
      * Initializes a {@link DemoModel}.
+     * 
      * @param name the name
      * @param value the value
      */

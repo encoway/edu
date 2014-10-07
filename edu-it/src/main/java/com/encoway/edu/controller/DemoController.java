@@ -2,6 +2,7 @@ package com.encoway.edu.controller;
 
 import com.encoway.edu.model.DemoModel;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +15,12 @@ import javax.faces.event.AjaxBehaviorEvent;
  */
 @SessionScoped
 @ManagedBean(name = "demo")
-public class DemoController {
+public class DemoController implements Serializable {
+
+    /**
+     * @since 1.5.7
+     */
+    private static final long serialVersionUID = -3977106738089852396L;
 
     private static final String INITIAL_STRING_VALUE = "Old Value";
 
