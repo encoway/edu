@@ -1,7 +1,8 @@
 package com.encoway.edu;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 
 import com.encoway.edu.util.WebElements;
 
@@ -41,10 +42,10 @@ public class DemoIT {
 
         demoPage.updateStringValue();
 
-        String new_value = OLD_VALUE + updateString();
+        String newValue = OLD_VALUE + updateString();
 
-        assertThat("unexpected updated input value", WebElements.getValue(driver, demoPage.getStringInput()), is(new_value));
-        assertThat("unexpected updated output value", demoPage.getStringOutputText().getText(), containsString(new_value));
+        assertThat("unexpected updated input value", WebElements.getValue(driver, demoPage.getStringInput()), is(newValue));
+        assertThat("unexpected updated output value", demoPage.getStringOutputText().getText(), containsString(newValue));
 
         demoPage.reset();
 
