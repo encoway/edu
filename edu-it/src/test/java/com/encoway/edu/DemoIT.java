@@ -1,10 +1,12 @@
 package com.encoway.edu;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 
 import com.encoway.edu.util.WebElements;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class DemoIT {
 
+    private static final String OLD_VALUE = "Old Value";
     private WebDriver driver;
 
     @Before
@@ -30,21 +33,23 @@ public class DemoIT {
     }
 
     @Test
-    public void thatStingsAreUpdated() {
+    public void thatStringsAreUpdated() {
         final DemoPage demoPage = PageFactory.initElements(driver, DemoPage.class).get();
 
-        assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getStringInput()), is("Old Value"));
-        assertThat("unexpected initial output value", demoPage.getOutputText().getText(), containsString("Old Value"));
+        assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getStringInput()), is(OLD_VALUE));
+        assertThat("unexpected initial output value", demoPage.getStringOutputText().getText(), containsString(OLD_VALUE));
 
         demoPage.updateStringValue();
 
-        assertThat("unexpected updated input value", WebElements.getValue(driver, demoPage.getStringInput()), is("Old Value+"));
-        assertThat("unexpected updated output value", demoPage.getOutputText().getText(), containsString("Old Value+"));
+        String new_value = OLD_VALUE + updateString();
+
+        assertThat("unexpected updated input value", WebElements.getValue(driver, demoPage.getStringInput()), is(new_value));
+        assertThat("unexpected updated output value", demoPage.getStringOutputText().getText(), containsString(new_value));
 
         demoPage.reset();
 
-        assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getStringInput()), is("Old Value"));
-        assertThat("unexpected initial output value", demoPage.getOutputText().getText(), containsString("Old Value"));
+        assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getStringInput()), is(OLD_VALUE));
+        assertThat("unexpected initial output value", demoPage.getStringOutputText().getText(), containsString(OLD_VALUE));
     }
 
     @Test
@@ -52,17 +57,21 @@ public class DemoIT {
         final DemoPage demoPage = PageFactory.initElements(driver, DemoPage.class).get();
 
         assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getIntegerInput()), is("0"));
-        assertThat("unexpected initial output value", demoPage.getOutputText().getText(), containsString("0"));
+        assertThat("unexpected initial output value", demoPage.getIntegerOutputText().getText(), containsString("0"));
 
         demoPage.updateIntegerValue();
 
         assertThat("unexpected updated input value", WebElements.getValue(driver, demoPage.getIntegerInput()), is("1"));
-        assertThat("unexpected updated output value", demoPage.getOutputText().getText(), containsString("1"));
+        assertThat("unexpected updated output value", demoPage.getIntegerOutputText().getText(), containsString("1"));
 
         demoPage.reset();
 
         assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getIntegerInput()), is("0"));
-        assertThat("unexpected initial output value", demoPage.getOutputText().getText(), containsString("0"));
+        assertThat("unexpected initial output value", demoPage.getIntegerOutputText().getText(), containsString("0"));
+    }
+
+    private String updateString() {
+        return " (upd. " + new SimpleDateFormat("hh:mm").format(new Date()) + ")";
     }
 
 }
