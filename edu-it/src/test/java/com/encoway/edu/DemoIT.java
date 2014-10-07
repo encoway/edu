@@ -16,6 +16,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
 
+/**
+ * Demo Page Integration Test.
+ */
 public class DemoIT {
 
     private static final String OLD_VALUE = "Old Value";

@@ -24,7 +24,7 @@
  * it has to know all the components requiring an update and trigger it:
  * ```xhtml
  * <h:selectOneMenu id="configSelect">
- * <f:ajax event="change" render=":fully:qualified:id:of:lastChangeText :yet:another:component" />
+ *     <f:ajax event="change" render=":fully:qualified:id:of:lastChangeText :yet:another:component" />
  * </h:form>
  * ```
  * Composed component IDs like `:fully:qualified:id:of:lastChangeText` are fragile and
@@ -33,16 +33,16 @@
  * ### Usage
  * ```xhtml
  * <h:form id="someForm">
- * <h:panelGroup id="somePanel" layout="block" updateOn="something-changed">
- * ...
- * </h:panelGroup>
+ *     <h:panelGroup id="somePanel" layout="block" updateOn="something-changed">
+ *         ...
+ *     </h:panelGroup>
  * </h:form>
  * ```
  * Now any component triggering `something-changed` can obtain a list of component IDs
  * of components registered for `something-changed` from the `edu` map:
  * ```xhtml
  * <h:commandLink>
- * <f:ajax render="#{edu['something-changed']}" />
+ *     <f:ajax render="#{edu['something-changed']}" />
  * </h:commandLink>
  * ```
  * #### Chaining Events
@@ -53,7 +53,7 @@
  * Likewise a component can "trigger" multiple events:
  * ```xhtml
  * <h:commandLink>
- * <f:ajax render="#{edu['something-changed something-else-changed']}" />
+ *     <f:ajax render="#{edu['something-changed something-else-changed']}" />
  * </h:commandLink>
  * ```
  * #### Default Value
@@ -61,7 +61,7 @@
  * This value can be overridden on a per-trigger basis:
  * ```xhtml
  * <h:commandLink>
- * <f:ajax render="#{edu['some-event-no-one-cares-about|:default:component:id']}" />
+ *     <f:ajax render="#{edu['some-event-no-one-cares-about|:default:component:id']}" />
  * </h:commandLink>
  * ```
  * This would result in the component with the ID `:default:component:id` to be updated.

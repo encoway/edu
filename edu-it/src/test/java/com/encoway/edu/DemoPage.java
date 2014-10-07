@@ -5,6 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+/**
+ * Page representing the demo for EDU.
+ */
 public class DemoPage extends AbstractPage<DemoPage> {
 
     @FindBy(xpath = "//form//input[@type='submit' and contains(@value, 'String')]")
@@ -16,18 +19,32 @@ public class DemoPage extends AbstractPage<DemoPage> {
     @FindBy(xpath = "//form//a[contains(text(), 'Reset')]")
     WebElement resetLink;
 
+    /**
+     * Initializes a {@link DemoPage}.
+     * 
+     * @param driver the driver used when interacting with this page
+     */
     public DemoPage(WebDriver driver) {
         super(driver, "demo.xhtml");
     }
 
+    /**
+     * Clicks the "Update String" button.
+     */
     public void updateStringValue() {
         clickAndWait(stringButton);
     }
 
+    /**
+     * Clicks the "Update Integer" button.
+     */
     public void updateIntegerValue() {
         clickAndWait(integerButton);
     }
 
+    /**
+     * Clicks the reset link.
+     */
     public void reset() {
         clickAndWait(resetLink);
     }
