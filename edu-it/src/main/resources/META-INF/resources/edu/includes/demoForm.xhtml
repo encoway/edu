@@ -6,25 +6,11 @@
 
 	<h:form id="demo" styleClass="form-horizontal">
 		<fieldset>
-			<legend>Inputs</legend>
+			<legend>Buttons</legend>
 
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="textinput">String</label>
-				<div class="col-md-4">
-					<h:inputText id="stringInput" value="#{demo.stringModel.value}"
-						updateOn="string-model-changed" styleClass="form-control input-md" />
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="textinput">Integer</label>
-				<div class="col-md-4">
-					<h:inputText id="intInput" value="#{demo.intModel.value}"
-						updateOn="int-model-changed" styleClass="form-control input-md"
-						pt:type="number" />
-				</div>
-			</div>
-
+			<p>
+				<h:outputText value="Push one of the buttons to update associated input fields and texts below." />
+			</p>
 			<div class="form-group">
 				<label class="col-md-4 control-label"></label>
 
@@ -43,6 +29,25 @@
 					<h:commandLink value="Reset String and Integer">
 						<f:ajax event="click" render="#{edu['string-model-changed int-model-changed']}" listener="#{demo.reset}" />
 					</h:commandLink>
+				</div>
+			</div>
+
+			<legend>Inputs</legend>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="textinput">String</label>
+				<div class="col-md-4">
+					<h:inputText id="stringInput" value="#{demo.stringModel.value}"
+						updateOn="string-model-changed" styleClass="form-control input-md" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="textinput">Integer</label>
+				<div class="col-md-4">
+					<h:inputText id="intInput" value="#{demo.intModel.value}"
+						updateOn="int-model-changed" styleClass="form-control input-md"
+						pt:type="number" />
 				</div>
 			</div>
 

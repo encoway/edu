@@ -8,17 +8,29 @@
 	<ui:define name="content">
 		<h1>Demo</h1>
 
+		<ui:include src="edu/includes/demoForm.xhtml">[Missing Include]</ui:include>
+
+		<legend>Texts</legend>
+
 		<p>
-			<h:outputFormat id="hybridOutput"
-				styleClass="string-update int-update"
-				updateOn="string-model-changed int-model-changed"
-				value="Always up to date: String: {0}, Integer: {1}">
+			<h:outputText value="Always up to date:"/>
+		</p>
+		<p>
+			<h:outputFormat id="hybridStringOutput"
+				styleClass="string-update"
+				updateOn="string-model-changed"
+				value="String: {0}">
 				<f:param value="#{demo.stringModel.value}" />
+			</h:outputFormat>
+		</p>
+		<p>
+			<h:outputFormat id="hybridIntOutput"
+				styleClass="int-update"
+				updateOn="int-model-changed"
+				value="Integer: {0}">
 				<f:param value="#{demo.intModel.value}" />
 			</h:outputFormat>
 		</p>
-
-		<ui:include src="edu/includes/demoForm.xhtml">[Missing Include]</ui:include>
 
 		<pre class="brush: xhtml; collapse: true">
 			<h:outputText value="#{pages.getFileContents('/META-INF/resources/edu/includes/demoForm.xhtml')}" />

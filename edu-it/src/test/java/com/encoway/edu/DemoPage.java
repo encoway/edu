@@ -32,8 +32,12 @@ public class DemoPage extends AbstractPage<DemoPage> {
         clickAndWait(resetLink);
     }
 
-    public WebElement getOutputText() {
-        return driver.findElement(By.xpath("//p[preceding-sibling::h1]/span"));
+    public WebElement getStringOutputText() {
+        return driver.findElement(By.id("hybridStringOutput"));
+    }
+
+    public WebElement getIntegerOutputText() {
+        return driver.findElement(By.id("hybridIntOutput"));
     }
 
     public WebElement getStringInput() {
