@@ -324,6 +324,29 @@
                         <arguments>${arguments} -Psonatype-oss-release</arguments>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.zeroturnaround</groupId>
+                    <artifactId>jrebel-maven-plugin</artifactId>
+                    <version>1.1.5</version>
+                    <configuration>
+                        <showGenerated>true</showGenerated>
+                        <alwaysGenerate>true</alwaysGenerate>
+                        <generateDefaultElements>true</generateDefaultElements>
+                        <addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
+                        <classpath>
+                            <resources>
+                                <resource>
+                                    <!-- These files have to be excluded from target/classes -->
+                                    <!-- so they will be found in src/main/resources instead -->
+                                    <excludes>
+                                        <exclude>**/faces-config.xml</exclude>
+                                        <exclude>**/web-fragment.xml</exclude>
+                                    </excludes>
+                                </resource>    
+                            </resources>
+                        </classpath>                        
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -348,6 +371,26 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jrebel</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.zeroturnaround</groupId>
+                        <artifactId>jrebel-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate-rebel-xml</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>generate</goal>
                                 </goals>
                             </execution>
                         </executions>
