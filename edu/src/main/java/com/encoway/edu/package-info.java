@@ -79,7 +79,7 @@
  * The following snippet demonstrates the programmatic usage of EDU: 
  * 
  * ```java
- * @ManagedProperty("#{eduContext}")
+ * {@literal @}ManagedProperty("#{eduContext}")
  * private EventDrivenUpdatesContext eduContext;
  * 
  * public void update() {
