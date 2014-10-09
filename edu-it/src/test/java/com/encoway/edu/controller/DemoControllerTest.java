@@ -1,8 +1,10 @@
 package com.encoway.edu.controller;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+
+import com.encoway.edu.EventDrivenUpdatesContext;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,13 +21,15 @@ public class DemoControllerTest {
 
     private static final int UPDATED_INT_VALUE = 1;
     private static final String UPDATED_STRING_VALUE = " (upd. " + new SimpleDateFormat("hh:mm").format(new Date()) + ")";
+
+    private EventDrivenUpdatesContext context;
     private DemoController controller;
-    private AjaxBehaviorEvent event;
 
     @Before
     public void setUp() {
         controller = new DemoController();
-        event = mock(AjaxBehaviorEvent.class);
+        context = mock(EventDrivenUpdatesContext.class);
+        controller.setEduContext(context);
     }
 
     @Test
@@ -33,11 +37,11 @@ public class DemoControllerTest {
         final String initialStringValue = controller.getStringModel().getValue();
         final int initialIntValue = controller.getIntModel().getValue();
 
-        controller.updateStringModel(event);
+        controller.updateStringModel(mock(AjaxBehaviorEvent.class));
         assertThat(controller.getStringModel().getValue(), is(initialStringValue + UPDATED_STRING_VALUE));
         assertThat(controller.getIntModel().getValue(), is(initialIntValue));
 
-        controller.reset(event);
+        controller.reset();
         assertThat(controller.getStringModel().getValue(), is(initialStringValue));
     }
 
@@ -46,11 +50,11 @@ public class DemoControllerTest {
         final String initialStringValue = controller.getStringModel().getValue();
         final int initialIntValue = controller.getIntModel().getValue();
 
-        controller.updateIntModel(event);
+        controller.updateIntModel(mock(AjaxBehaviorEvent.class));
         assertThat(controller.getStringModel().getValue(), is(initialStringValue));
         assertThat(controller.getIntModel().getValue(), is(initialIntValue + UPDATED_INT_VALUE));
 
-        controller.reset(event);
+        controller.reset();
         assertThat(controller.getIntModel().getValue(), is(initialIntValue));
     }
 

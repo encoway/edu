@@ -15,6 +15,9 @@
  */
 package com.encoway.edu;
 
+import java.util.Collection;
+import java.util.Set;
+
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
@@ -32,7 +35,7 @@ class Components {
      * @param component {@link UIComponent} to return the ID for
      * @return a fully qualified ID
      */
-    public static String getFullyQualifiedComponentId(FacesContext context, UIComponent component) {
+    static String getFullyQualifiedComponentId(FacesContext context, UIComponent component) {
         return getFullyQualifiedComponentId(context, component, true);
     }
 
@@ -44,12 +47,12 @@ class Components {
      * @param absolute if {@code true} {@link UINamingContainer#getSeparatorChar(FacesContext)} is prepended (to indicate an absolute path)
      * @return a fully qualified ID
      */
-    public static String getFullyQualifiedComponentId(FacesContext context, UIComponent component, boolean absolute) {
+    static String getFullyQualifiedComponentId(FacesContext context, UIComponent component, boolean absolute) {
         if (component == null) {
             return null;
         }
 
-        char separatorChar = UINamingContainer.getSeparatorChar(context);
+        char separatorChar = getSeparatorChar(context);
 
         String fqid = component.getId();
         while (component.getParent() != null) {
@@ -63,13 +66,34 @@ class Components {
         return absolute ? separatorChar + fqid : fqid;
     }
 
+    static char getSeparatorChar(FacesContext context) {
+        return UINamingContainer.getSeparatorChar(context);
+    }
+
     /**
      * Returns the fully qualified (absolute) ID of {@code component}.
      * @param component {@link UIComponent} to return the ID for
      * @return a fully qualified ID
      */
-    public static String getFullyQualifiedComponentId(UIComponent component) {
+    static String getFullyQualifiedComponentId(UIComponent component) {
         return getFullyQualifiedComponentId(FacesContext.getCurrentInstance(), component);
+    }
+
+    /**
+     * Adds the {@code ids} to the collection of IDs to be rendered.
+     * Any leading {@link UINamingContainer#getSeparatorChar(FacesContext) separator char} will be stripped.
+     * @param context a {@link FacesContext}
+     * @param ids collection of fully qualified IDs
+     */
+    static void render(FacesContext context, final Set<String> ids) {
+        if (ids.isEmpty()) {
+            return;
+        }
+        final Collection<String> renderIds = context.getPartialViewContext().getRenderIds();
+        final char separatorChar = getSeparatorChar(context);
+        for (String id : ids) {
+            renderIds.add(id.substring(id.indexOf(separatorChar) + 1));
+        }
     }
 
 }

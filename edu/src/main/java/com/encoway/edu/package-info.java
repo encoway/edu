@@ -68,20 +68,41 @@
  * The default value can be everything that would be valid in place of the EL expression (`#{edu['...']}`)
  * including special identifiers such as `@this`, `@all` etc.
  * 
+ * #### Programmatic
+ * It is possible to trigger component updates from java code. This is done through the
+ * {@link com.encoway.edu.EventDrivenUpdatesContext}. An instance of which may be obtained 
+ * via injection or a static helper method {@link com.encoway.edu.EventDrivenUpdatesContext#getCurrentInstance()}.
+ * The {@link com.encoway.edu.EventDrivenUpdatesContext} is registered under the name 
+ * {@link com.encoway.edu.EventDrivenUpdatesContext#EVNT_CONTEXT_DEFAULT_NAME} by default.
+ * This may be overridden, however (see section Configuration).
+ * 
+ * The following snippet demonstrates the programmatic usage of EDU: 
+ * 
+ * ```java
+ * @ManagedProperty("#{eduContext}")
+ * private EventDrivenUpdatesContext eduContext;
+ * 
+ * public void update() {
+ *     eduContext.update("string-model-changed int-model-changed");
+ * }
+ * ```
+ * 
  * ### Configuration
  * In general EDU works out of the box and does not need any further configuration.
  * However, if either the attribute `updateOn` or the variable name `edu` is already in use
  * these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:
  * 
- * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_CONTEXT_PARAM}:  
- * Overrides the attribute used in components to register for events
+ * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_PARAM}:  
+ * the attribute used in components to register for events
  * 
- * {@value com.encoway.edu.EventDrivenUpdatesListener.EventListenerMapELResolver#EVENT_LISTENER_MAP_CONTEXT_PARAM}:  
- * Overrides the name of the EDU map
+ * {@value com.encoway.edu.EventListenerMapELResolver#EVENT_LISTENER_MAP_PARAM}:  
+ * the name of the EDU map
  * 
- * @see com.encoway.edu.EventDrivenUpdatesListener
- * @see com.encoway.edu.EventDrivenUpdatesListener.EventListenerMap#get(Object)
+ * {@value com.encoway.edu.EventDrivenUpdatesContext#EVENT_CONTEXT_PARAM}:  
+ * the name of the {@link com.encoway.edu.EventDrivenUpdatesContext} bean
+ * 
  * @see "[Observer Pattern](http://en.wikipedia.org/wiki/Observer_pattern)"
  * @see "[Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control)"
  */
 package com.encoway.edu;
+

@@ -1,5 +1,6 @@
 package com.encoway.edu.controller;
 
+import com.encoway.edu.EventDrivenUpdatesContext;
 import com.encoway.edu.model.DemoModel;
 
 import java.io.Serializable;
@@ -7,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
@@ -31,12 +33,23 @@ public class DemoController implements Serializable {
 
     private DemoModel<Integer> intModel = new DemoModel<>("Integer", INITIAL_INT_VALUE);
 
+    @ManagedProperty("#{eduContext}")
+    private EventDrivenUpdatesContext eduContext;
+
     public DemoModel<String> getStringModel() {
         return stringModel;
     }
 
     public DemoModel<Integer> getIntModel() {
         return intModel;
+    }
+
+    public void setEduContext(EventDrivenUpdatesContext eduContext) {
+        this.eduContext = eduContext;
+    }
+
+    public EventDrivenUpdatesContext getEduContext() {
+        return eduContext;
     }
 
     /**
@@ -62,9 +75,10 @@ public class DemoController implements Serializable {
      * 
      * @param event the reason for the reset
      */
-    public void reset(AjaxBehaviorEvent event) {
+    public void reset() {
         stringModel.reset();
         intModel.reset();
+        eduContext.update("string-model-changed int-model-changed");
     }
 
     private String createUpdateString() {

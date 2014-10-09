@@ -17,17 +17,17 @@
 				<div class="col-md-8">
 					<!-- update listeners for 'string-model-changed' -->
 					<h:commandButton value="Update String" styleClass="btn btn-primary">
-						<f:ajax event="click" render="#{edu['string-model-changed']}" listener="#{demo.updateStringModel}" />
+						<f:ajax render="#{edu['string-model-changed']}" listener="#{demo.updateStringModel}" />
 					</h:commandButton>
 
 					<!-- update listeners for 'int-model-changed' -->
 					<h:commandButton value="Update Integer" styleClass="btn btn-primary">
-						<f:ajax event="click" render="#{edu['int-model-changed']}" listener="#{demo.updateIntModel}" />
+						<f:ajax render="#{edu['int-model-changed']}" listener="#{demo.updateIntModel}" />
 					</h:commandButton>
 
 					<!-- update listeners for 'string-model-changed' and 'int-model-changed' -->
-					<h:commandLink value="Reset String and Integer">
-						<f:ajax event="click" render="#{edu['string-model-changed int-model-changed']}" listener="#{demo.reset}" />
+					<h:commandLink value="Reset String and Integer" action="#{demo.reset}">
+						<f:ajax />
 					</h:commandLink>
 				</div>
 			</div>
@@ -38,7 +38,9 @@
 				<label class="col-md-4 control-label" for="textinput">String</label>
 				<div class="col-md-4">
 					<h:inputText id="stringInput" value="#{demo.stringModel.value}"
-						updateOn="string-model-changed" styleClass="form-control input-md" />
+					   updateOn="string-model-changed" styleClass="form-control input-md">
+					   <f:ajax event="change" />
+					</h:inputText>
 				</div>
 			</div>
 
@@ -47,7 +49,9 @@
 				<div class="col-md-4">
 					<h:inputText id="intInput" value="#{demo.intModel.value}"
 						updateOn="int-model-changed" styleClass="form-control input-md"
-						pt:type="number" />
+						pt:type="number">
+						<f:ajax event="change" />
+				    </h:inputText>
 				</div>
 			</div>
 

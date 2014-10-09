@@ -74,15 +74,33 @@ This would result in the component with the ID `:default:component:id` to be upd
 The default value can be everything that would be valid in place of the EL expression (`#{edu['...']}`)
 including special identifiers such as `@this`, `@all` etc.
 
+#### Programmatic
+
+It is possible to trigger component updates from java code. This is done through the com.encoway.edu.EventDrivenUpdatesContext. An instance of which may be obtained via injection or a static helper method `EventDrivenUpdatesContext.getCurrentInstance()`. The `EventDrivenUpdatesContext` is registered under the name `eduContext` by default. This may be overridden, however (see section Configuration). 
+
+The following snippet demonstrates the programmatic usage of EDU: 
+
+```java
+@ManagedProperty("#{eduContext}")
+private EventDrivenUpdatesContext eduContext; 
+
+public void update() {
+    eduContext.update("string-model-changed int-model-changed"); 
+}
+``` 
+
 ## Configuration
 
 In general EDU works out of the box and does not need any further configuration. However, if either the attribute `updateOn` or the variable name `edu` is already in use these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:
 
-**com.encoway.edu.LISTENER_ATTRIBUTE**:  
+**com.encoway.edu.ATTRIBUTE_NAME**:  
 Overrides the attribute used in components to register for events (default: `updateOn`)
  
-**com.encoway.edu.EVENT_LISTENER_MAP_NAME**:  
+**com.encoway.edu.MAP_NAME**:  
 Overrides the name of the EDU map (default: `edu`)
+
+**com.encoway.edu.CONTEXT_NAME**:  
+Overrides the name of the EDU context (default: `eduContext`)
 
 ## JavaDoc
 
