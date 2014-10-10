@@ -27,7 +27,7 @@ import com.google.common.base.Strings;
 /**
  * {@link SystemEventListener} mapping event names to registered {@link UIComponent}'s IDs.
  */
-class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
+public class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
 
     private final EventDrivenUpdatesMapProvider provider;
 

@@ -24,6 +24,24 @@ might break if the parent components are restructured.
 
 EDU takes the responsibility from the trigger to know which component needs to be updated.
 
+### Preparation
+
+In order to use EDU add the following snippet do your faces-config.xml
+
+```xml
+<managed-bean eager="true">
+    <managed-bean-class>com.encoway.edu.EventDrivenUpdatesContext</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+    <managed-bean-name>eduContext</managed-bean-name>
+</managed-bean>
+```
+
+It is also possible to use EDU independently of JSF managed beans, for example, with spring:
+
+```xml
+<bean id="eduContext" class="com.encoway.edu.EventDrivenUpdatesContext" />
+```
+
 ## Usage
 
 ```xhtml

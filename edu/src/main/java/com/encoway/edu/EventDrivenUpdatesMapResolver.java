@@ -25,7 +25,7 @@ import javax.el.ELResolver;
 /**
  * {@link ELResolver} for a {@link EventDrivenUpdatesMap}.
  */
-class EventDrivenUpdatesMapResolver extends ELResolver {
+public class EventDrivenUpdatesMapResolver extends ELResolver {
     
     private final EventDrivenUpdatesMapProvider mapProvider;
     

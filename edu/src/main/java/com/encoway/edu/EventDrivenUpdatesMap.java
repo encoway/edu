@@ -35,7 +35,7 @@ import com.google.common.base.Splitter;
 /**
  * A {@link Map} mapping event names to {@link UIComponent} IDs.
  */
-class EventDrivenUpdatesMap extends AbstractMap<String, String> implements Serializable {
+public class EventDrivenUpdatesMap extends AbstractMap<String, String> implements Serializable {
 
     /**
      * @since 1.5.4

@@ -56,12 +56,12 @@ public class EventDrivenUpdatesConfig {
     public static final String EVENTS_ATTRIBUTE_DEFAULT_NAME = "updateOn";
     /**
      * Name of the `context-param` to override the listener attribute,
-     * defaults to {@value EventDrivenUpdatesConfig#EVENTS_ATTRIBUTE_DEFAULT_NAME}.
+     * defaults to {@value #EVENTS_ATTRIBUTE_DEFAULT_NAME}.
      */
     public static final String EVENTS_ATTRIBUTE_PARAM = EventDrivenUpdatesConfig.PARAM_PREFIX + ".ATTRIBUTE_NAME";
     /**
      * Name of the `context-param` to override the EL variable name through which the EDU map is accessible,
-     * defaults to {@value EVENT_LISTENER_MAP_DEFAULT_NAME}.
+     * defaults to {@value #EVENT_LISTENER_MAP_DEFAULT_NAME}.
      */
     public static final String EVENT_LISTENER_MAP_PARAM = EventDrivenUpdatesConfig.PARAM_PREFIX + ".MAP_NAME";
     /**
