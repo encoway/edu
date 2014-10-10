@@ -100,18 +100,16 @@
  * ```
  * 
  * ### <a id="Configuration"></a>Configuration
+ * 
  * In general EDU works out of the box and does not need any further configuration.
  * However, if either the attribute `updateOn` or the variable name `edu` is already in use
  * these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:
  * 
- * {@value com.encoway.edu.EventDrivenUpdatesListener#EVENTS_ATTRIBUTE_PARAM}:  
+ * {@value com.encoway.edu.EventDrivenUpdatesConfig#EVENTS_ATTRIBUTE_PARAM}:  
  * the attribute used in components to register for events
  * 
- * {@value com.encoway.edu.EventListenerMapELResolver#EVENT_LISTENER_MAP_PARAM}:  
+ * {@value com.encoway.edu.EventDrivenUpdatesConfig#EVENT_LISTENER_MAP_PARAM}:  
  * the name of the EDU map
- * 
- * {@value com.encoway.edu.EventDrivenUpdatesContext#EVENT_CONTEXT_PARAM}:  
- * the name of the {@link com.encoway.edu.EventDrivenUpdatesContext} bean
  * 
  * @see "[Observer Pattern](http://en.wikipedia.org/wiki/Observer_pattern)"
  * @see "[Inversion of Control](http://en.wikipedia.org/wiki/Inversion_of_control)"

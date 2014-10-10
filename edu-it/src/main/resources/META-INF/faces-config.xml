@@ -12,5 +12,11 @@
     		<others/>
     	</before>
     </ordering>
+    
+    <managed-bean eager="true">
+        <managed-bean-class>com.encoway.edu.EventDrivenUpdatesContext</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-name>eduContext</managed-bean-name>
+    </managed-bean>
 
 </faces-config>

@@ -5,24 +5,27 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 	<h:form id="demo" styleClass="form-horizontal">
+	
 		<fieldset>
+		
 			<legend>Buttons</legend>
-
+			
 			<p>
 				<h:outputText value="Push one of the buttons to update associated input fields and texts below." />
 			</p>
+			
 			<div class="form-group">
 				<label class="col-md-4 control-label"></label>
 
 				<div class="col-md-8">
 					<!-- update listeners for 'string-model-changed' -->
 					<h:commandButton value="Update String" styleClass="btn btn-primary">
-						<f:ajax render="#{edu['string-model-changed']}" listener="#{demo.updateStringModel}" />
+						<f:ajax listener="#{demo.updateStringModel}" />
 					</h:commandButton>
 
 					<!-- update listeners for 'int-model-changed' -->
 					<h:commandButton value="Update Integer" styleClass="btn btn-primary">
-						<f:ajax render="#{edu['int-model-changed']}" listener="#{demo.updateIntModel}" />
+						<f:ajax listener="#{demo.updateIntModel}" />
 					</h:commandButton>
 
 					<!-- update listeners for 'string-model-changed' and 'int-model-changed' -->
@@ -31,15 +34,23 @@
 					</h:commandLink>
 				</div>
 			</div>
-
+			
+		</fieldset>
+		
+		<fieldset>
+		
 			<legend>Inputs</legend>
-
+			
+            <p>
+                <h:outputText value="The following values may be changed manually. The value will be submitted 'on change' using AJAX." />
+            </p>
+            
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="textinput">String</label>
 				<div class="col-md-4">
 					<h:inputText id="stringInput" value="#{demo.stringModel.value}"
 					   updateOn="string-model-changed" styleClass="form-control input-md">
-					   <f:ajax event="change" />
+					   <f:ajax render="#{edu['string-model-changed']}" />
 					</h:inputText>
 				</div>
 			</div>
@@ -47,10 +58,10 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="textinput">Integer</label>
 				<div class="col-md-4">
-					<h:inputText id="intInput" value="#{demo.intModel.value}"
+					<h:inputText id="intInput" value="#{demo.intModel.value}" converter="javax.faces.Integer"
 						updateOn="int-model-changed" styleClass="form-control input-md"
 						pt:type="number">
-						<f:ajax event="change" />
+						<f:ajax render="#{edu['int-model-changed']}" />
 				    </h:inputText>
 				</div>
 			</div>

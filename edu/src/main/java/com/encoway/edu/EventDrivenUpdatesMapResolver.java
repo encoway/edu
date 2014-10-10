@@ -21,39 +21,23 @@ import java.util.Map;
 
 import javax.el.ELContext;
 import javax.el.ELResolver;
-import javax.faces.context.FacesContext;
 
 /**
- * {@link ELResolver} for a {@link EventListenerMap}.
+ * {@link ELResolver} for a {@link EventDrivenUpdatesMap}.
  */
-class EventListenerMapELResolver extends ELResolver {
+class EventDrivenUpdatesMapResolver extends ELResolver {
     
-    /**
-     * Name of the `context-param` to override the EL variable name through which the EDU map is accessible,
-     * defaults to {@value #EVENT_LISTENER_MAP_DEFAULT_NAME}.
-     */
-    public static final String EVENT_LISTENER_MAP_PARAM = Configuration.PARAM_PREFIX + ".MAP_NAME";
-
-    /**
-     * Default value.
-     */
-    public static final String EVENT_LISTENER_MAP_DEFAULT_NAME = "edu";
-
-    private final String mapName;
+    private final EventDrivenUpdatesMapProvider mapProvider;
     
-    EventListenerMapELResolver() {
-        this(getMapName());
-    }
-
-    EventListenerMapELResolver(String mapName) {
-        this.mapName = mapName;
+    public EventDrivenUpdatesMapResolver(EventDrivenUpdatesMapProvider mapProvider) {
+        this.mapProvider = mapProvider;
     }
 
     @Override
     public Object getValue(ELContext context, Object base, Object property) {
         if (isResolvable(base, property)) {
             context.setPropertyResolved(true);
-            return getEventListenerMap(FacesContext.getCurrentInstance());
+            return mapProvider.getMap(null);
         }
         return null;
     }
@@ -82,31 +66,11 @@ class EventListenerMapELResolver extends ELResolver {
 
     @Override
     public Class<?> getCommonPropertyType(ELContext context, Object base) {
-        return EventListenerMap.class;
-    }
-
-    /**
-     * Returns an {@link EventListenerMap} for the specified {@code facesContext}.
-     * A new one will be created on demand.
-     * @param facesContext a JSF context
-     * @return an {@link EventListenerMap}
-     */
-    public EventListenerMap getEventListenerMap(FacesContext facesContext) {
-        Map<String, Object> viewMap = facesContext.getViewRoot().getViewMap();
-        EventListenerMap eventListenerMap = (EventListenerMap) viewMap.get(mapName);
-        if (eventListenerMap == null) {
-            eventListenerMap = new EventListenerMap();
-            viewMap.put(mapName, eventListenerMap);
-        }
-        return eventListenerMap;
-    }
-
-    static String getMapName() {
-        return Configuration.getParameter(EVENT_LISTENER_MAP_PARAM, EVENT_LISTENER_MAP_DEFAULT_NAME);
+        return EventDrivenUpdatesMap.class;
     }
 
     private boolean isResolvable(Object base, Object property) {
-        return base == null && mapName.equals(property);
+        return base == null && mapProvider.getName().equals(property);
     }
 
 }

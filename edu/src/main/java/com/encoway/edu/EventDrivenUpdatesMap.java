@@ -35,7 +35,7 @@ import com.google.common.base.Splitter;
 /**
  * A {@link Map} mapping event names to {@link UIComponent} IDs.
  */
-class EventListenerMap extends AbstractMap<String, String> implements Serializable {
+class EventDrivenUpdatesMap extends AbstractMap<String, String> implements Serializable {
 
     /**
      * @since 1.5.4
@@ -99,7 +99,7 @@ class EventListenerMap extends AbstractMap<String, String> implements Serializab
     }
     
     public void add(String events, String...ids) {
-        for (String event : EventListenerMap.parseEvents(events)) {
+        for (String event : EventDrivenUpdatesMap.parseEvents(events)) {
             Set<String> listenerIds = delegate.get(event);
             if (listenerIds == null) {
                 listenerIds = new HashSet<>();
@@ -120,11 +120,11 @@ class EventListenerMap extends AbstractMap<String, String> implements Serializab
         return Objects.toStringHelper(this).add("delegate", delegate).toString();
     }
 
-    EventListenerMap() {
+    EventDrivenUpdatesMap() {
         this(new HashMap<String, Set<String>>());
     }
     
-    EventListenerMap(Map<String, Set<String>> delegate) {
+    EventDrivenUpdatesMap(Map<String, Set<String>> delegate) {
         this.delegate = delegate;
     }
     

@@ -59,6 +59,7 @@ public class DemoController implements Serializable {
      */
     public void updateStringModel(AjaxBehaviorEvent event) {
         stringModel.setValue(stringModel.getValue() + createUpdateString());
+        eduContext.update("string-model-changed");
     }
 
     /**
@@ -68,6 +69,7 @@ public class DemoController implements Serializable {
      */
     public void updateIntModel(AjaxBehaviorEvent event) {
         intModel.setValue(intModel.getValue() + UPDATE_INT_VALUE);
+        eduContext.update("int-model-changed");
     }
 
     /**

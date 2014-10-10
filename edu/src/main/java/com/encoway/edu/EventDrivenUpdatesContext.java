@@ -15,90 +15,55 @@
  */
 package com.encoway.edu;
 
-import java.util.Map;
-
-import javax.faces.application.Application;
+import javax.faces.FactoryFinder;
+import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PostAddToViewEvent;
 
 /**
  * EDU context of the a JSF application.
  */
 public class EventDrivenUpdatesContext {
-    
-    /**
-     * Name of the `context-param` to override the context bean name,
-     * defaults to {@value #EVNT_CONTEXT_DEFAULT_NAME}.
-     */
-    public static final String EVENT_CONTEXT_PARAM = Configuration.PARAM_PREFIX + ".CONTEXT_NAME";
-    
-    /**
-     * Default value.
-     */
-    public static final String EVNT_CONTEXT_DEFAULT_NAME = "eduContext";
 
-    private final EventListenerMapELResolver resolver;
+    private final EventDrivenUpdatesConfig config;
     
+    public EventDrivenUpdatesContext() {
+        this(new EventDrivenUpdatesConfig());
+    }
+
     /**
-     * Returns the instance of {@link EventDrivenUpdatesContext} associated with the current {@link Application}.
-     * @return the context, may not be {@code null}
-     * @throws IllegalStateException if the context has not been initialized
-     * @throws IllegalStateException if a bean of another type than {@link EventDrivenUpdatesContext} is found
+     * Initializes an {@link EventDrivenUpdatesContext}.
+     * 
+     * @param config a configuration
      */
-    public static EventDrivenUpdatesContext getCurrentInstance() {
-        final Map<String, Object> applicationMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
-        final String name = Configuration.getParameter(EVENT_CONTEXT_PARAM, EVNT_CONTEXT_DEFAULT_NAME);
-        final Object bean = applicationMap.get(name);
+    public EventDrivenUpdatesContext(EventDrivenUpdatesConfig config) {
+        this.config = config;
         
-        if (bean == null) {
-            throw new IllegalStateException(
-                    "no EDU context has been initialized/it cannot be found under the name " + name);
+        final ApplicationFactory applicationFactory = (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
+        if (applicationFactory != null) {            
+            applicationFactory.getApplication().subscribeToEvent(
+                    PostAddToViewEvent.class, config.getListener());
         }
-        
-        if (!(bean instanceof EventDrivenUpdatesContext)) {
-            throw new IllegalStateException(
-                    "unexpected bean found unter name " + name + ": " + bean + " expected an instance of " + EventDrivenUpdatesContext.class);
-        }
-        
-        return (EventDrivenUpdatesContext) bean;
     }
 
     /**
      * Updates all components registered for one or more of the {@code events}.
+     * 
      * @param events events expression, see {@link com.encoway.edu package documentation}
      */
     public void update(String events) {
         update(FacesContext.getCurrentInstance(), events);
     }
-    
+
     /**
      * Updates all components registered for one or more of the {@code events}.
+     * 
      * @param facesContext the JSF context to be used for lookups
      * @param events events expression, see {@link com.encoway.edu package documentation}
      */
     public void update(FacesContext facesContext, String events) {
-        final EventListenerMap map = resolver.getEventListenerMap(facesContext);
+        final EventDrivenUpdatesMap map = config.getProvider().getMap(facesContext);
         Components.render(facesContext, map.getSeparate(events));
-    }
-
-    /**
-     * Initializes a {@link EventDrivenUpdatesContext}.
-     * @param resolver EL resolver to be used
-     */
-    EventDrivenUpdatesContext(EventListenerMapELResolver resolver) {
-        this.resolver = resolver;
-    }
-
-    static void initialize(EventListenerMapELResolver resolver) {
-        final Map<String, Object> applicationMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
-        final String name = Configuration.getParameter(EVENT_CONTEXT_PARAM, EVNT_CONTEXT_DEFAULT_NAME);
-        final Object bean = applicationMap.get(name);
-        if (bean == null) {
-            applicationMap.put(name, new EventDrivenUpdatesContext(resolver));
-        } else if (!(bean instanceof EventDrivenUpdatesContext)) {
-            throw new IllegalStateException("the bean name " + name + " is already in use: " + bean);
-        } else {
-            throw new IllegalStateException(EventDrivenUpdatesContext.class + " bean has already been set under the name " + name);
-        }
     }
 
 }

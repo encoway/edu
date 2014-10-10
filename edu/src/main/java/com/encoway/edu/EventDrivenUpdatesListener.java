@@ -27,39 +27,20 @@ import com.google.common.base.Strings;
 /**
  * {@link SystemEventListener} mapping event names to registered {@link UIComponent}'s IDs.
  */
-public class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
+class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
 
-    /**
-     * Name of the `context-param` to override the listener attribute,
-     * defaults to {@value #EVENTS_ATTRIBUTE_DEFAULT_NAME}.
-     */
-    public static final String EVENTS_ATTRIBUTE_PARAM = Configuration.PARAM_PREFIX + ".ATTRIBUTE_NAME";
-
-    /**
-     * Default value.
-     */
-    public static final String EVENTS_ATTRIBUTE_DEFAULT_NAME = "updateOn";
-
-    private final EventListenerMapELResolver resolver;
+    private final EventDrivenUpdatesMapProvider provider;
 
     private final String attribute;
 
     /**
-     * Initializes a {@link EventDrivenUpdatesListener} configured through the external context.
-     */
-    public EventDrivenUpdatesListener() {
-        this(Configuration.getParameter(EVENTS_ATTRIBUTE_PARAM, EVENTS_ATTRIBUTE_DEFAULT_NAME), new EventListenerMapELResolver());
-        EventDrivenUpdatesContext.initialize(resolver);
-    }
-
-    /**
-     * Initializes a {@link EventDrivenUpdatesListener} with the specified {@code attribute} name and {@code resolver}.
+     * Initializes a {@link EventDrivenUpdatesListener} with the specified {@code attribute} name and {@code provider}.
      * @param attribute name of the attribute to look for
-     * @param resolver EL resolver to be used
+     * @param provider EL provider to be used
      */
-    public EventDrivenUpdatesListener(String attribute, EventListenerMapELResolver resolver) {
+    public EventDrivenUpdatesListener(String attribute, EventDrivenUpdatesMapProvider provider) {
         this.attribute = attribute;
-        this.resolver = resolver;
+        this.provider = provider;
     }
 
     @Override
@@ -67,8 +48,7 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
         final UIComponent listener = componentEvent.getComponent();
         final FacesContext facesContext = FacesContext.getCurrentInstance();
         final String listenerId = Components.getFullyQualifiedComponentId(facesContext, listener);
-        final EventListenerMap eventListenerMap = resolver.getEventListenerMap(facesContext);
-        eventListenerMap.add((String) listener.getAttributes().get(attribute), listenerId);
+        provider.getMap(facesContext).add((String) listener.getAttributes().get(attribute), listenerId);
     }
 
     @Override

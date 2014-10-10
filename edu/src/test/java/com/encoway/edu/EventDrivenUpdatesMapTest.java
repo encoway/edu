@@ -31,9 +31,9 @@ import java.util.Set;
 import org.junit.Test;
 
 /**
- * Unit test for {@link EventListenerMap}.
+ * Unit test for {@link EventDrivenUpdatesMap}.
  */
-public class EventListenerMapTest {
+public class EventDrivenUpdatesMapTest {
 
     private static final Map<String, Set<String>> DEFAULT_DELEGATE = new HashMap<String, Set<String>>() {
 
@@ -53,7 +53,7 @@ public class EventListenerMapTest {
     
     @Test
     public void add() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         map.add("event-d event-e", ":comp_1.1", ":comp_1.2");
         assertThat("unexpected ID", map.getSeparate("event-d"), contains(":comp_1.1", ":comp_1.2"));
         assertThat("unexpected ID", map.getSeparate("event-e"), contains(":comp_1.1", ":comp_1.2"));
@@ -64,19 +64,19 @@ public class EventListenerMapTest {
     
     @Test(expected = IllegalArgumentException.class)
     public void getFailsForObjectKey() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         map.get(new Object());
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void getFailsForNullKey() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         map.get(null);
     }
 
     @Test
     public void getSupportsIterableKey() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final String ids = map.get(DEFAULT_DELEGATE.keySet());
         for (String id : DEFAULT_DELEGATE.get("event-b")) {            
             assertThat("missing ID", ids, containsString(id));
@@ -85,14 +85,14 @@ public class EventListenerMapTest {
 
     @Test
     public void getSupportsStringKey() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final String ids = map.get("event-a");
         assertThat("unexpected ID", ids, is(DEFAULT_DELEGATE.get("event-a").iterator().next()));
     }
 
     @Test
     public void getSupportsStringKeyWithMultipleEvents() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final String ids = map.get("event-a event-b,event-c");
         for (String id : DEFAULT_DELEGATE.get("event-b")) {            
             assertThat("missing ID", ids, containsString(id));
@@ -101,14 +101,14 @@ public class EventListenerMapTest {
 
     @Test
     public void getSupportsStringKeyWithDefaultValue() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final String ids = map.get("event-c|test");
         assertThat("expected default value", ids, is("test"));
     }
     
     @Test
     public void getSeparateSupportsStringKey() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final Set<String> actualIds = map.getSeparate("event-a");
         final Set<String> expectedIds = DEFAULT_DELEGATE.get("event-a");
         assertThat("unexpected ID", actualIds, contains(asArray(expectedIds, String.class)));
@@ -116,7 +116,7 @@ public class EventListenerMapTest {
 
     @Test
     public void getSeparateSupportsStringKeyWithMultipleEvents() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final Set<String> actualIds = map.getSeparate("event-a event-b,event-c");
         final Set<String> expectedIds = DEFAULT_DELEGATE.get("event-b");
         assertThat(actualIds, containsInAnyOrder(asArray(expectedIds, String.class)));
@@ -124,7 +124,7 @@ public class EventListenerMapTest {
 
     @Test
     public void getSeparateSupportsStringKeyWithDefaultValue() {
-        final EventListenerMap map = new EventListenerMap(DEFAULT_DELEGATE);
+        final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final Set<String> ids = map.getSeparate("event-c|test");
         assertThat("expected default value", ids, contains("test"));
     }
