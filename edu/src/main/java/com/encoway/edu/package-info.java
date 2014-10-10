@@ -79,15 +79,27 @@
  * The following snippet demonstrates the programmatic usage of EDU: 
  * 
  * ```java
- * {@literal @}ManagedProperty("#{eduContext}")
- * private EventDrivenUpdatesContext eduContext;
+ * {@literal @}SessionScoped
+ * {@literal @}MangedBean("controller")
+ * class Controller {
  * 
- * public void update() {
- *     eduContext.update("string-model-changed int-model-changed");
+ *     {@literal @}ManagedProperty("#{eduContext}")
+ *     private EventDrivenUpdatesContext eduContext;
+ * 
+ *     public void update() {
+ *         eduContext.update("something-changed something-else-changed");
+ *     }
+ *     
  * }
  * ```
  * 
- * ### Configuration
+ * ```xhtml
+ * <h:commandLink value="Update" action="#{controller.update}">
+ *     <f:ajax />
+ * </h:commandLink>
+ * ```
+ * 
+ * ### <a id="Configuration"></a>Configuration
  * In general EDU works out of the box and does not need any further configuration.
  * However, if either the attribute `updateOn` or the variable name `edu` is already in use
  * these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:

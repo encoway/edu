@@ -81,30 +81,29 @@ It is possible to trigger component updates from java code. This is done through
 The following snippet demonstrates the programmatic usage of EDU: 
 
 ```java
-@ManagedProperty("#{eduContext}")
-private EventDrivenUpdatesContext eduContext; 
+@SessionScoped
+@MangedBean("controller")
+class Controller {
 
-public void update() {
-    eduContext.update("string-model-changed int-model-changed"); 
+    @ManagedProperty("#{eduContext}")
+    private EventDrivenUpdatesContext eduContext;
+
+    public void update() {
+        eduContext.update("something-changed something-else-changed");
+    }
+    
 }
+```
+
+```xhtml
+<h:commandLink value="Update" action="#{controller.update}">
+    <f:ajax />
+</h:commandLink>
 ``` 
 
 ## Configuration
 
-In general EDU works out of the box and does not need any further configuration. However, if either the attribute `updateOn` or the variable name `edu` is already in use these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent:
-
-**com.encoway.edu.ATTRIBUTE_NAME**:  
-Overrides the attribute used in components to register for events (default: `updateOn`)
- 
-**com.encoway.edu.MAP_NAME**:  
-Overrides the name of the EDU map (default: `edu`)
-
-**com.encoway.edu.CONTEXT_NAME**:  
-Overrides the name of the EDU context (default: `eduContext`)
-
-## JavaDoc
-
-Anyone interested in the inner workings of EDU may also have a look at the [generated documentation](http://encoway.github.io/edu/javadoc/current "latest JavaDoc"). 
+In general EDU just works and does not need any configuration. However, if either the attribute `updateOn` or any of the implicit bean names is already in use, these defaults may be overridden using `<context-param>` entries in a `web.xml` or an equivalent. Please have a look at the [section Configuration](http://encoway.github.io/edu/javadoc/current/index.html#Configuration "Open API Documentation") in the API documentation. 
 
 ## License
 
