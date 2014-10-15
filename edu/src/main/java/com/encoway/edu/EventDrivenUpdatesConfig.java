@@ -21,8 +21,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
-import com.google.common.base.Strings;
-
 public class EventDrivenUpdatesConfig {
 
     static class ViewMapProvider implements EventDrivenUpdatesMapProvider {
@@ -115,14 +113,12 @@ public class EventDrivenUpdatesConfig {
 
     static String getParameter(ExternalContext externalContext, String parameterName, String defaultValue) {
         String value = externalContext.getInitParameter(parameterName);
-        value = Strings.isNullOrEmpty(value) ? defaultValue : value;
-        return value;
+        return value == null || value.isEmpty() ? defaultValue : value;
     }
 
     static String getParameter(ServletContext servletContext, String parameterName, String defaultValue) {
         String value = servletContext.getInitParameter(parameterName);
-        value = Strings.isNullOrEmpty(value) ? defaultValue : value;
-        return value;
+        return value == null || value.isEmpty() ? defaultValue : value;
     }
 
 }

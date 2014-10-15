@@ -18,19 +18,15 @@ package com.encoway.edu;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.faces.component.UIComponent;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
-import com.google.common.base.Splitter;
 
 /**
  * A {@link Map} mapping event names to {@link UIComponent} IDs.
@@ -44,9 +40,9 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
 
     private static final String DEFAULT_VALUE = "@none";
 
-    private static final Splitter EVENT_ATTRIBUTE_SPLITTER = Splitter.on(Pattern.compile("[ ,]"));
+    private static final Pattern EVENT_ATTRIBUTE_SPLITTER = Pattern.compile("[ ,]");
     
-    private static final Splitter DEFAULT_VALUE_KEY_SPLITTER = Splitter.on('|');
+    private static final char DEFAULT_VALUE_KEY_SPLITTER = '|';
     
     private static final char EVENT_LISTENER_DELIMITER = ' ';
     
@@ -69,8 +65,8 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
         if (events instanceof Iterable) {
             return get((Iterable<String>) events, DEFAULT_VALUE);
         } else if (events instanceof String) {
-            final Iterator<String> iter = parseDefaultValue((String) events);
-            return get(iter.next(), iter.hasNext() ? iter.next() : DEFAULT_VALUE);
+            final String[] iter = parseEventsAndDefault((String) events);
+            return get(iter[0], iter[1]);
         }
         throw new IllegalArgumentException("expected Iterable<String> or String but was " + events);
     }
@@ -83,8 +79,16 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
      * @return a space separated list of fully qualified component IDs or `defaultValue`
      */
     public String get(Iterable<String> events, String defaultValue) {
-        final Set<String> ids = getSeparate(events, defaultValue);
-        return Joiner.on(EVENT_LISTENER_DELIMITER).join(ids);
+        final Iterator<String> iter = getSeparate(events, defaultValue).iterator();
+        StringBuilder builder = new StringBuilder();
+        if (iter.hasNext()) {
+            builder.append(iter.next());
+            while (iter.hasNext()) {
+                builder.append(EVENT_LISTENER_DELIMITER);
+                builder.append(iter.next());
+            }
+        }
+        return builder.toString();
     }
     
     /**
@@ -117,7 +121,7 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("delegate", delegate).toString();
+        return EventDrivenUpdatesMap.class.getSimpleName() + "{delegate: " + delegate + "}";
     }
 
     EventDrivenUpdatesMap() {
@@ -129,8 +133,8 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
     }
     
     Set<String> getSeparate(String events) {
-        final Iterator<String> iter = parseDefaultValue(events);
-        return getSeparate(iter.next(), iter.hasNext() ? iter.next() : DEFAULT_VALUE);
+        final String[] iter = parseEventsAndDefault(events);
+        return getSeparate(iter[0], iter[1]);
     }
 
     Set<String> getSeparate(String events, String defaultValue) {
@@ -155,12 +159,18 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
         return ids;
     }
     
-    static Iterator<String> parseDefaultValue(String events) {
-        return DEFAULT_VALUE_KEY_SPLITTER.split(events).iterator();
+    static String[] parseEventsAndDefault(String events) {
+        final int offset = events.indexOf(DEFAULT_VALUE_KEY_SPLITTER);
+        if (offset >= 0) {
+            return new String[] { 
+                events.substring(0, offset), 
+                events.substring(offset + 1) };
+        }
+        return new String[] { events, DEFAULT_VALUE };
     }
 
-    static Iterable<String> parseEvents(String events) {
-        return events == null || events.isEmpty() ? Collections.<String>emptyList() : EVENT_ATTRIBUTE_SPLITTER.split(events);
+    static List<String> parseEvents(String events) {
+        return Arrays.asList(EVENT_ATTRIBUTE_SPLITTER.split(events));
     }
-
+    
 }

@@ -22,8 +22,6 @@ import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
-import com.google.common.base.Strings;
-
 /**
  * {@link SystemEventListener} mapping event names to registered {@link UIComponent}'s IDs.
  */
@@ -56,7 +54,7 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
         if (source instanceof UIComponent) {
             final Object value = ((UIComponent) source).getAttributes().get(attribute);
             if (value instanceof String) {
-                return !Strings.isNullOrEmpty((String) value);
+                return !((String) value).isEmpty();
             }
         }
         return false;

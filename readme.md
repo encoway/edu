@@ -21,6 +21,8 @@ For usage instructions see module [`edu`](edu).
 
 In order to use EDU in a web application the `edu.jar` must be present on the classpath.
 
+EDU has **no transitive dependencies**. It expects `javax.servlet-api` and `javax.el-api` to be present on the class path.
+
 ### Maven
 
 Add the following dependency to the `<dependencies>` section of your `pom.xml`:
