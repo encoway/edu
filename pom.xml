@@ -100,7 +100,7 @@
                 <artifactId>guava</artifactId>
                 <version>15.0</version>
             </dependency>
-            
+
             <!-- Servlet API -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -349,10 +349,32 @@
                                         <exclude>**/faces-config.xml</exclude>
                                         <exclude>**/web-fragment.xml</exclude>
                                     </excludes>
-                                </resource>    
+                                </resource>
                             </resources>
-                        </classpath>                        
+                        </classpath>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.13</version>
+                    <configuration>
+                        <configLocation>../.checkstyle/config.xml</configLocation>
+                        <suppressionsLocation>../.checkstyle/suppressions.xml</suppressionsLocation>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <linkXRef>false</linkXRef>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

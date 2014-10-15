@@ -29,12 +29,16 @@ public class EventDrivenUpdatesMapResolver extends ELResolver {
     
     private final EventDrivenUpdatesMapProvider mapProvider;
     
+    /**
+     * Initializes an {@link EventDrivenUpdatesMapResolver} with the specified {@code mapProvider}.
+     * @param mapProvider the provider used to obtain the current instance of {@link EventDrivenUpdatesMap}
+     */
     public EventDrivenUpdatesMapResolver(EventDrivenUpdatesMapProvider mapProvider) {
         this.mapProvider = mapProvider;
     }
 
     @Override
-    public Object getValue(ELContext context, Object base, Object property) {
+    public Object getValue(final ELContext context, Object base, Object property) {
         if (isResolvable(base, property)) {
             context.setPropertyResolved(true);
             return mapProvider.getMap(null);
@@ -43,19 +47,19 @@ public class EventDrivenUpdatesMapResolver extends ELResolver {
     }
 
     @Override
-    public Class<?> getType(ELContext context, Object base, Object property) {
+    public Class<?> getType(final ELContext context, Object base, Object property) {
         return Map.class;
     }
 
     @Override
-    public void setValue(ELContext context, Object base, Object property, Object value) {
+    public void setValue(final ELContext context, Object base, Object property, Object value) {
         if (isResolvable(base, property)) {
             throw new UnsupportedOperationException("this resolver is read-only");
         }
     }
 
     @Override
-    public boolean isReadOnly(ELContext context, Object base, Object property) {
+    public boolean isReadOnly(final ELContext context, Object base, Object property) {
         return true;
     }
 

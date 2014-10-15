@@ -26,7 +26,11 @@ import javax.faces.event.PostAddToViewEvent;
 public class EventDrivenUpdatesContext {
 
     private final EventDrivenUpdatesConfig config;
-    
+
+    /**
+     * Initializes an {@link EventDrivenUpdatesContext}.
+     * This constructor is intended to be used by JSF.
+     */
     public EventDrivenUpdatesContext() {
         this(new EventDrivenUpdatesConfig());
     }
@@ -38,9 +42,9 @@ public class EventDrivenUpdatesContext {
      */
     public EventDrivenUpdatesContext(EventDrivenUpdatesConfig config) {
         this.config = config;
-        
+
         final ApplicationFactory applicationFactory = (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
-        if (applicationFactory != null) {            
+        if (applicationFactory != null) {
             applicationFactory.getApplication().subscribeToEvent(
                     PostAddToViewEvent.class, config.getListener());
         }

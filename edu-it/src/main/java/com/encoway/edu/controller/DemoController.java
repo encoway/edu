@@ -74,8 +74,6 @@ public class DemoController implements Serializable {
 
     /**
      * Resets both {@link #stringModel} and {@link #intModel}.
-     * 
-     * @param event the reason for the reset
      */
     public void reset() {
         stringModel.reset();

@@ -117,7 +117,7 @@ public class EventDrivenUpdatesMapTest {
     @Test
     public void getSeparateSupportsStringKeyWithMultipleEvents() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
-        final Set<String> actualIds = map.getSeparate("event-a event-b,event-c");
+        final Set<String> actualIds = map.getSeparate("event-a event-b, event-c");
         final Set<String> expectedIds = DEFAULT_DELEGATE.get("event-b");
         assertThat(actualIds, containsInAnyOrder(asArray(expectedIds, String.class)));
     }

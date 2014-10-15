@@ -49,6 +49,21 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
     private final Map<String, Set<String>> delegate;
 
     /**
+     * Initializes an {@link EventDrivenUpdatesMap} with an empty map delegate.
+     */
+    EventDrivenUpdatesMap() {
+        this(new HashMap<String, Set<String>>());
+    }
+
+    /**
+     * Initializes an {@link EventDrivenUpdatesMap} with the specified {@code delegate}.
+     * @param delegate the map used as delegate
+     */
+    EventDrivenUpdatesMap(Map<String, Set<String>> delegate) {
+        this.delegate = delegate;
+    }
+
+    /**
      * Returns a space separated list of component IDs of components associated with `events`.
      * If `events` is a {@link String} the following format is expected: `event-a[[,] event-b][|default-value]`
      * Where **`default-value`** is returned if no matching event is found and defaults to `@none`.
@@ -102,6 +117,11 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
         return get(parseEvents(events), defaultValue);
     }
     
+    /**
+     * Maps the the specified {@code ids} as listeners for {@code events}.
+     * @param events the events triggering an update of the specified {@code ids}
+     * @param ids the ids to be updated
+     */
     public void add(String events, String...ids) {
         for (String event : EventDrivenUpdatesMap.parseEvents(events)) {
             Set<String> listenerIds = delegate.get(event);
@@ -124,14 +144,6 @@ public class EventDrivenUpdatesMap extends AbstractMap<String, String> implement
         return EventDrivenUpdatesMap.class.getSimpleName() + "{delegate: " + delegate + "}";
     }
 
-    EventDrivenUpdatesMap() {
-        this(new HashMap<String, Set<String>>());
-    }
-    
-    EventDrivenUpdatesMap(Map<String, Set<String>> delegate) {
-        this.delegate = delegate;
-    }
-    
     Set<String> getSeparate(String events) {
         final String[] iter = parseEventsAndDefault(events);
         return getSeparate(iter[0], iter[1]);

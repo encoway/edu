@@ -21,32 +21,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+/**
+ * EDU configuration.
+ */
 public class EventDrivenUpdatesConfig {
-
-    static class ViewMapProvider implements EventDrivenUpdatesMapProvider {
-
-        private final String mapName;
-
-        public ViewMapProvider(String mapName) {
-            this.mapName = mapName;
-        }
-
-        @Override
-        public String getName() {
-            return mapName;
-        }
-
-        @Override
-        public EventDrivenUpdatesMap getMap(FacesContext facesContext) {
-            Map<String, Object> viewMap = facesContext.getViewRoot().getViewMap();
-            EventDrivenUpdatesMap eventListenerMap = (EventDrivenUpdatesMap) viewMap.get(mapName);
-            if (eventListenerMap == null) {
-                eventListenerMap = new EventDrivenUpdatesMap();
-                viewMap.put(mapName, eventListenerMap);
-            }
-            return eventListenerMap;
-        }
-    }
 
     /**
      * Default value.
@@ -66,29 +44,55 @@ public class EventDrivenUpdatesConfig {
      * Default value.
      */
     public static final String EVENT_LISTENER_MAP_DEFAULT_NAME = "edu";
-    
-    private final EventDrivenUpdatesListener listener;
-    private final EventDrivenUpdatesMapResolver resolver;
-    private final EventDrivenUpdatesMapProvider provider;
-    
+
     /**
      * Prefix used for `context-param` definitions.
      */
     static final String PARAM_PREFIX = "com.encoway.edu";
 
+    private final EventDrivenUpdatesListener listener;
+    private final EventDrivenUpdatesMapResolver resolver;
+    private final EventDrivenUpdatesMapProvider provider;
+
+    /**
+     * Initializes an {@link EventDrivenUpdatesConfig} based on the external context.
+     * 
+     * @see EventDrivenUpdatesConfig#getParameter(String, String)
+     */
     public EventDrivenUpdatesConfig() {
-        this(EventDrivenUpdatesConfig.getParameter(EventDrivenUpdatesConfig.EVENTS_ATTRIBUTE_PARAM, EventDrivenUpdatesConfig.EVENTS_ATTRIBUTE_DEFAULT_NAME),
-             EventDrivenUpdatesConfig.getParameter(EventDrivenUpdatesConfig.EVENT_LISTENER_MAP_PARAM, EventDrivenUpdatesConfig.EVENT_LISTENER_MAP_DEFAULT_NAME));
+        this(
+                EventDrivenUpdatesConfig.getParameter(
+                        EventDrivenUpdatesConfig.EVENTS_ATTRIBUTE_PARAM, 
+                        EventDrivenUpdatesConfig.EVENTS_ATTRIBUTE_DEFAULT_NAME),
+                EventDrivenUpdatesConfig.getParameter(
+                        EventDrivenUpdatesConfig.EVENT_LISTENER_MAP_PARAM,
+                        EventDrivenUpdatesConfig.EVENT_LISTENER_MAP_DEFAULT_NAME));
     }
 
+    /**
+     * Initializes an {@link EventDrivenUpdatesConfig} using the specified {@code attributeName} an {@code mapName}.
+     * @param attributeName name of the JSF component attribute holding the events a component 'listens' for 
+     * @param mapName name of the {@link EventDrivenUpdatesMap} exposed by {@link EventDrivenUpdatesMapResolver}
+     */
     public EventDrivenUpdatesConfig(String attributeName, final String mapName) {
         this(attributeName, new ViewMapProvider(mapName));
     }
-    
+
+    /**
+     * Initializes an {@link EventDrivenUpdatesConfig} using the specified {@code attributeName} an {@code provider}.
+     * @param attributeName name of the JSF component attribute holding the events a component 'listens' for
+     * @param provider the provider exposing the current {@link EventDrivenUpdatesMap}
+     */
     public EventDrivenUpdatesConfig(String attributeName, EventDrivenUpdatesMapProvider provider) {
         this(new EventDrivenUpdatesListener(attributeName, provider), new EventDrivenUpdatesMapResolver(provider), provider);
     }
 
+    /**
+     * Initializes an {@link EventDrivenUpdatesConfig} using the specified {@code listener} an {@code resolver} and {@code provider}.
+     * @param listener JSF component listener responsible for the event-listener-mapping
+     * @param resolver EL resolver for the {@link EventDrivenUpdatesMap}
+     * @param provider the provider exposing the current {@link EventDrivenUpdatesMap} 
+     */
     public EventDrivenUpdatesConfig(EventDrivenUpdatesListener listener, EventDrivenUpdatesMapResolver resolver, EventDrivenUpdatesMapProvider provider) {
         this.listener = listener;
         this.resolver = resolver;
@@ -119,6 +123,31 @@ public class EventDrivenUpdatesConfig {
     static String getParameter(ServletContext servletContext, String parameterName, String defaultValue) {
         String value = servletContext.getInitParameter(parameterName);
         return value == null || value.isEmpty() ? defaultValue : value;
+    }
+
+    static class ViewMapProvider implements EventDrivenUpdatesMapProvider {
+
+        private final String mapName;
+
+        public ViewMapProvider(String mapName) {
+            this.mapName = mapName;
+        }
+
+        @Override
+        public String getName() {
+            return mapName;
+        }
+
+        @Override
+        public EventDrivenUpdatesMap getMap(FacesContext facesContext) {
+            Map<String, Object> viewMap = facesContext.getViewRoot().getViewMap();
+            EventDrivenUpdatesMap eventListenerMap = (EventDrivenUpdatesMap) viewMap.get(mapName);
+            if (eventListenerMap == null) {
+                eventListenerMap = new EventDrivenUpdatesMap();
+                viewMap.put(mapName, eventListenerMap);
+            }
+            return eventListenerMap;
+        }
     }
 
 }
