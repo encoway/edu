@@ -57,16 +57,34 @@ public class EventDrivenUpdatesConfig {
     /**
      * Initializes an {@link EventDrivenUpdatesConfig} based on the external context.
      * 
-     * @see EventDrivenUpdatesConfig#getParameter(String, String)
+     * @see EventDrivenUpdatesConfig#EventDrivenUpdatesConfig(ExternalContext)
      */
     public EventDrivenUpdatesConfig() {
+        this(FacesContext.getCurrentInstance().getExternalContext());
+    }
+
+    /**
+     * Initializes an {@link EventDrivenUpdatesConfig} based on {@code externalContext}.
+     * 
+     * @param externalContext the external context
+     */
+    public EventDrivenUpdatesConfig(ExternalContext externalContext) {
+        this(InitParamProvider.create(externalContext));
+    }
+    
+    /**
+     * Initializes an {@link EventDrivenUpdatesConfig} based on {@code servletContext}.
+     * 
+     * @param servletContext the servlet context
+     */
+    public EventDrivenUpdatesConfig(ServletContext servletContext) {
+        this(InitParamProvider.create(servletContext));
+    }
+    
+    EventDrivenUpdatesConfig(InitParamProvider provider) {
         this(
-                EventDrivenUpdatesConfig.getParameter(
-                        EventDrivenUpdatesConfig.EVENTS_ATTRIBUTE_PARAM, 
-                        EventDrivenUpdatesConfig.EVENTS_ATTRIBUTE_DEFAULT_NAME),
-                EventDrivenUpdatesConfig.getParameter(
-                        EventDrivenUpdatesConfig.EVENT_LISTENER_MAP_PARAM,
-                        EventDrivenUpdatesConfig.EVENT_LISTENER_MAP_DEFAULT_NAME));
+                provider.get(EVENTS_ATTRIBUTE_PARAM, EVENTS_ATTRIBUTE_DEFAULT_NAME),
+                provider.get(EVENT_LISTENER_MAP_PARAM, EVENT_LISTENER_MAP_DEFAULT_NAME));
     }
 
     /**
@@ -111,20 +129,6 @@ public class EventDrivenUpdatesConfig {
         return provider;
     }
 
-    static String getParameter(String parameterName, String defaultValue) {
-        return getParameter(FacesContext.getCurrentInstance().getExternalContext(), parameterName, defaultValue);
-    }
-
-    static String getParameter(ExternalContext externalContext, String parameterName, String defaultValue) {
-        String value = externalContext.getInitParameter(parameterName);
-        return value == null || value.isEmpty() ? defaultValue : value;
-    }
-
-    static String getParameter(ServletContext servletContext, String parameterName, String defaultValue) {
-        String value = servletContext.getInitParameter(parameterName);
-        return value == null || value.isEmpty() ? defaultValue : value;
-    }
-
     static class ViewMapProvider implements EventDrivenUpdatesMapProvider {
 
         private final String mapName;
@@ -148,6 +152,39 @@ public class EventDrivenUpdatesConfig {
             }
             return eventListenerMap;
         }
+    }
+    
+    /**
+     * Interface for obtaining init parameters.
+     */
+    abstract static class InitParamProvider {
+        
+        abstract String get(String key, String defaultValue);
+        
+        static InitParamProvider create(final ServletContext context) {
+            return new InitParamProvider() {
+
+                @Override
+                String get(String parameterName, String defaultValue) {
+                    String value = context.getInitParameter(parameterName);
+                    return value == null || value.isEmpty() ? defaultValue : value;
+                }
+                
+            };
+        }
+        
+        static InitParamProvider create(final ExternalContext context) {
+            return new InitParamProvider() {
+
+                @Override
+                String get(String parameterName, String defaultValue) {
+                    String value = context.getInitParameter(parameterName);
+                    return value == null || value.isEmpty() ? defaultValue : value;
+                }
+                
+            };
+        }
+        
     }
 
 }

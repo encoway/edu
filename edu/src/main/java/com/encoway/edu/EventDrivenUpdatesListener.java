@@ -15,6 +15,8 @@
  */
 package com.encoway.edu;
 
+import java.util.Objects;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -37,6 +39,9 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
      * @param provider EL provider to be used
      */
     public EventDrivenUpdatesListener(String attribute, EventDrivenUpdatesMapProvider provider) {
+        Objects.requireNonNull(attribute, "attribute to look for");
+        Objects.requireNonNull(provider, "map provider");
+        
         this.attribute = attribute;
         this.provider = provider;
     }

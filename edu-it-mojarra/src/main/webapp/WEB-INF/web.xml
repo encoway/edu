@@ -8,6 +8,7 @@
 	<display-name>Event Driven Updates MyFaces Integration Tests</display-name>
 	
 	<absolute-ordering>
+        <name>spring_web</name>
 		<name>com_encoway_edu_it</name>
 	</absolute-ordering>
 	

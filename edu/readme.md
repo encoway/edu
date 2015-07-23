@@ -36,12 +36,6 @@ In order to use EDU add the following snippet do your faces-config.xml
 </managed-bean>
 ```
 
-It is also possible to use EDU independently of JSF managed beans, for example, with spring:
-
-```xml
-<bean id="eduContext" class="com.encoway.edu.EventDrivenUpdatesContext" />
-```
-
 ## Usage
 
 ```xhtml
@@ -117,7 +111,47 @@ class Controller {
 <h:commandLink value="Update" action="#{controller.update}">
     <f:ajax />
 </h:commandLink>
-``` 
+```
+
+When using the `EventDrivenUpdatesContext` from another context, for example, Spring
+the `FacesContext` must already be initialized when accessing it. A lazily initialized
+`FactoryBean` wrapper may be used to guarantee this:
+
+```java
+/**
+ * {@link FactoryBean} for {@link EventDrivenUpdatesContext}.
+ * Expects a JSF managed bean named {@link #setManagedBeanName(String)}.
+ */
+public class EventDrivenUpdatesContextFactoryBean implements FactoryBean<EventDrivenUpdatesContext> {
+
+    private String managedBeanName = "eduContext";
+
+    public void setManagedBeanName(String managedBeanName) {
+        this.managedBeanName = managedBeanName;
+    }
+
+    @Override
+    public EventDrivenUpdatesContext getObject() throws Exception {
+        ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+        return (EventDrivenUpdatesContext) elContext.getELResolver().getValue(elContext, null, managedBeanName);
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return EventDrivenUpdatesContext.class;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
+
+}
+```
+
+```xml
+<bean id="eduContextWrapper" class="com.encoway.edu.EventDrivenUpdatesContextFactoryBean" />
+```
 
 ## Configuration
 

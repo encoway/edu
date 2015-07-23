@@ -7,6 +7,12 @@
     					
     <name>event_driven_updates_integration_tests</name>
     
+    <application>
+        <el-resolver>
+                org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>    
+    </application>
+    
     <ordering>
     	<before>
     		<others/>

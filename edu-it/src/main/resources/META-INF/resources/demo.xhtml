@@ -31,6 +31,10 @@
 				<f:param value="#{demo.intModel.value}" />
 			</h:outputFormat>
 		</p>
+		
+		<p>
+		    <h:outputText value="There is a spring bean wrappper called eduContextWrapper" rendered="#{not empty eduContextWrapper}" />
+		</p>
 
 		<pre class="brush: xhtml; collapse: true">
 			<h:outputText value="#{pages.getFileContents('/META-INF/resources/edu/includes/demoForm.xhtml')}" />
