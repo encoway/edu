@@ -17,6 +17,9 @@ public class DemoInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+        if (servletContext.getAttribute("contextClass") != null) {
+            return;
+        }
 
         try (AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext()) {
             context.setServletContext(servletContext);

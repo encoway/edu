@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
     					http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-    					
+
     <name>event_driven_updates_integration_tests</name>
-    
+
+    <!-- Demonstrate Spring Integration -->
+    <application>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+
     <ordering>
-    	<before>
-    		<others/>
-    	</before>
+        <before>
+            <others />
+        </before>
     </ordering>
-    
+
     <managed-bean eager="true">
         <managed-bean-class>com.encoway.edu.EventDrivenUpdatesContext</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>

@@ -11,6 +11,21 @@
         <name>spring_web</name>
 		<name>com_encoway_edu_it</name>
 	</absolute-ordering>
+
+    <!-- Spring initialization for application servers not supporting javax.servlet.ServletContainerInitializer -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.encoway.edu.spring.DemoInitializer.DemoConfig</param-value>
+    </context-param>
 	
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
