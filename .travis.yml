@@ -1,3 +1,4 @@
+sudo: false
 language: java
 before_script: chmod a+x .travis/maven.sh
 script: .travis/maven.sh
