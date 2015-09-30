@@ -45,29 +45,29 @@ public class EventDrivenUpdatesMapTest {
         }
     };
 
-    static Set<String> asSet(String...strings) {
+    static Set<String> asSet(String... strings) {
         final HashSet<String> set = new HashSet<>();
         set.addAll(Arrays.asList(strings));
         return set;
     }
-    
+
     @Test
     public void add() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         map.add("event-d event-e", ":comp_1.1", ":comp_1.2");
-        assertThat("unexpected ID", map.getSeparate("event-d"), contains(":comp_1.1", ":comp_1.2"));
-        assertThat("unexpected ID", map.getSeparate("event-e"), contains(":comp_1.1", ":comp_1.2"));
-        assertThat("unexpected ID", map.getSeparate("event-d event-e"), contains(":comp_1.1", ":comp_1.2"));
-        assertThat("unexpected ID", map.getSeparate("event-d,event-e"), contains(":comp_1.1", ":comp_1.2"));
-        assertThat("unexpected ID", map.getSeparate("event-d, event-e"), contains(":comp_1.1", ":comp_1.2"));
+        assertThat("unexpected ID", map.getSeparate("event-d"), containsInAnyOrder(":comp_1.1", ":comp_1.2"));
+        assertThat("unexpected ID", map.getSeparate("event-e"), containsInAnyOrder(":comp_1.1", ":comp_1.2"));
+        assertThat("unexpected ID", map.getSeparate("event-d event-e"), containsInAnyOrder(":comp_1.1", ":comp_1.2"));
+        assertThat("unexpected ID", map.getSeparate("event-d,event-e"), containsInAnyOrder(":comp_1.1", ":comp_1.2"));
+        assertThat("unexpected ID", map.getSeparate("event-d, event-e"), containsInAnyOrder(":comp_1.1", ":comp_1.2"));
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void getFailsForObjectKey() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         map.get(new Object());
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void getFailsForNullKey() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
@@ -78,7 +78,7 @@ public class EventDrivenUpdatesMapTest {
     public void getSupportsIterableKey() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final String ids = map.get(DEFAULT_DELEGATE.keySet());
-        for (String id : DEFAULT_DELEGATE.get("event-b")) {            
+        for (String id : DEFAULT_DELEGATE.get("event-b")) {
             assertThat("missing ID", ids, containsString(id));
         }
     }
@@ -94,7 +94,7 @@ public class EventDrivenUpdatesMapTest {
     public void getSupportsStringKeyWithMultipleEvents() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
         final String ids = map.get("event-a event-b,event-c");
-        for (String id : DEFAULT_DELEGATE.get("event-b")) {            
+        for (String id : DEFAULT_DELEGATE.get("event-b")) {
             assertThat("missing ID", ids, containsString(id));
         }
     }
@@ -105,7 +105,7 @@ public class EventDrivenUpdatesMapTest {
         final String ids = map.get("event-c|test");
         assertThat("expected default value", ids, is("test"));
     }
-    
+
     @Test
     public void getSeparateSupportsStringKey() {
         final EventDrivenUpdatesMap map = new EventDrivenUpdatesMap(DEFAULT_DELEGATE);
@@ -128,10 +128,10 @@ public class EventDrivenUpdatesMapTest {
         final Set<String> ids = map.getSeparate("event-c|test");
         assertThat("expected default value", ids, contains("test"));
     }
-    
+
     @SuppressWarnings("unchecked")
     public static <T> T[] asArray(Collection<T> list, Class<T> type) {
-        T[] a = (T[])java.lang.reflect.Array.newInstance(type, list.size());
+        T[] a = (T[]) java.lang.reflect.Array.newInstance(type, list.size());
         return list.toArray(a);
     }
 
