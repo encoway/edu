@@ -3,7 +3,7 @@
 
     <groupId>com.encoway</groupId>
     <artifactId>edu-parent</artifactId>
-    <version>1.6.1-SNAPSHOT</version>
+    <version>1.6.1</version>
 
     <packaging>pom</packaging>
 
@@ -38,7 +38,7 @@
         <url>https://github.com/encoway/edu</url>
         <connection>scm:git:git@github.com:encoway/edu.git</connection>
         <developerConnection>scm:git:git@github.com:encoway/edu.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.6.1</tag>
     </scm>
 
     <distributionManagement>
