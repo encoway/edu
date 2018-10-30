@@ -1,18 +1,16 @@
 package com.encoway.edu.controller;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-
 import com.encoway.edu.EventDrivenUpdatesContext;
+import org.junit.Before;
+import org.junit.Test;
 
+import javax.faces.event.AjaxBehaviorEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.faces.event.AjaxBehaviorEvent;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Unit test for {@link DemoController}.

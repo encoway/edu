@@ -15,6 +15,9 @@
  */
 package com.encoway.edu;
 
+import javax.enterprise.inject.Default;
+import javax.faces.component.UIComponent;
+import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -26,11 +29,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.faces.component.UIComponent;
-
 /**
  * A {@link Map} mapping event names to {@link UIComponent} IDs.
  */
+@Default
+@ViewScoped
 public class EventDrivenUpdatesMap extends AbstractMap<String, String> implements Serializable {
 
     /**

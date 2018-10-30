@@ -11,18 +11,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>javax.faces-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -43,6 +33,17 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>
+                    ${project.basedir}/src/main/resources
+                </directory>
+                <excludes>
+                    <exclude>META-INF/header-template.txt</exclude>
+                </excludes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>

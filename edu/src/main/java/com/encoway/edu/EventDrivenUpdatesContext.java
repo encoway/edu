@@ -15,40 +15,19 @@
  */
 package com.encoway.edu;
 
-import javax.faces.FactoryFinder;
-import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PostAddToViewEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import java.io.Serializable;
 
 /**
  * EDU context of the a JSF application.
  */
-public class EventDrivenUpdatesContext {
+@ViewScoped
+public class EventDrivenUpdatesContext implements Serializable {
 
-    private final EventDrivenUpdatesConfig config;
-
-    /**
-     * Initializes an {@link EventDrivenUpdatesContext}.
-     * This constructor is intended to be used by JSF.
-     */
-    public EventDrivenUpdatesContext() {
-        this(new EventDrivenUpdatesConfig());
-    }
-
-    /**
-     * Initializes an {@link EventDrivenUpdatesContext}.
-     * 
-     * @param config a configuration
-     */
-    public EventDrivenUpdatesContext(EventDrivenUpdatesConfig config) {
-        this.config = config;
-
-        final ApplicationFactory applicationFactory = (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
-        if (applicationFactory != null) {
-            applicationFactory.getApplication().subscribeToEvent(
-                    PostAddToViewEvent.class, config.getListener());
-        }
-    }
+    @Inject
+    private transient EventDrivenUpdatesMap map;
 
     /**
      * Updates all components registered for one or more of the {@code events}.
@@ -66,7 +45,6 @@ public class EventDrivenUpdatesContext {
      * @param events events expression, see {@link com.encoway.edu package documentation}
      */
     public void update(FacesContext facesContext, String events) {
-        final EventDrivenUpdatesMap map = config.getProvider().getMap(facesContext);
         Components.render(facesContext, map.getSeparate(events));
     }
 

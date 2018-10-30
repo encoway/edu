@@ -2,21 +2,22 @@ package com.encoway.edu.controller;
 
 import com.encoway.edu.EventDrivenUpdatesContext;
 import com.encoway.edu.model.DemoModel;
+import com.encoway.edu.model.IntegerModel;
+import com.encoway.edu.model.StringModel;
 
+import javax.enterprise.context.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.event.AjaxBehaviorEvent;
-
 /**
  * Demo bean holding some values and providing logic for manipulating them.
  */
+@Named("demo")
 @SessionScoped
-@ManagedBean(name = "demo")
 public class DemoController implements Serializable {
 
     /**
@@ -29,11 +30,11 @@ public class DemoController implements Serializable {
     private static final int INITIAL_INT_VALUE = 0;
     private static final int UPDATE_INT_VALUE = 1;
 
-    private DemoModel<String> stringModel = new DemoModel<>("String", INITIAL_STRING_VALUE);
+    private StringModel stringModel = new StringModel("String", INITIAL_STRING_VALUE);
 
-    private DemoModel<Integer> intModel = new DemoModel<>("Integer", INITIAL_INT_VALUE);
+    private IntegerModel intModel = new IntegerModel("Integer", INITIAL_INT_VALUE);
 
-    @ManagedProperty("#{eduContext}")
+    @Inject
     private EventDrivenUpdatesContext eduContext;
 
     public DemoModel<String> getStringModel() {

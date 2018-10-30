@@ -2,7 +2,6 @@ Event Driven Updates
 ====================
 
 [![Build Status](https://travis-ci.org/encoway/edu.svg?branch=master)](https://travis-ci.org/encoway/edu)
-[![Project Status](http://stillmaintained.com/encoway/edu.png)](http://stillmaintained.com/encoway/edu)
 
 Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
 
@@ -11,7 +10,7 @@ An event in terms of EDU is just a name through which it can be referenced by a 
 
 ## Demo
 
-There are two projects used for integration testing based on [MyFaces](https://github.com/encoway/edu/tree/master/edu-it-myfaces) and [Mojarra](https://github.com/encoway/edu/tree/master/edu-it-mojarra). Each can be launched running the maven command `mvn jetty:run` from within their module folder and viewed in a browser at http://localhost:8080.  
+There is an integration test based on [Mojarra](https://github.com/encoway/edu/tree/master/edu-it-mojarra). Each can be launched running the maven command `mvn jetty:run` from within their module folder and viewed in a browser at http://localhost:8080.  
 
 ## Usage
 
@@ -21,7 +20,7 @@ For usage instructions see module [`edu`](edu).
 
 In order to use EDU in a web application the `edu.jar` must be present on the classpath.
 
-EDU has **no transitive dependencies**. It expects `javax.servlet-api` and `javax.el-api` to be present on the class path.
+EDU has **no transitive dependencies**. It expects `javax.javaee-web-api` to be present on the class path.
 
 ### Maven
 

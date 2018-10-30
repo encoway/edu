@@ -1,20 +1,20 @@
 package com.encoway.edu;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-
 import com.encoway.edu.util.WebElements;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Demo Page Integration Test.
@@ -54,6 +54,11 @@ public class DemoIT {
 
         assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getStringInput()), is(OLD_VALUE));
         assertThat("unexpected initial output value", demoPage.getStringOutputText().getText(), containsString(OLD_VALUE));
+
+        demoPage.updateStringValue("test");
+
+        assertThat("unexpected manual input value", WebElements.getValue(driver, demoPage.getStringInput()), endsWith("test"));
+        assertThat("unexpected manual output value", demoPage.getStringOutputText().getText(), endsWith("test"));
     }
 
     @Test
@@ -72,6 +77,11 @@ public class DemoIT {
 
         assertThat("unexpected initial input value", WebElements.getValue(driver, demoPage.getIntegerInput()), is("0"));
         assertThat("unexpected initial output value", demoPage.getIntegerOutputText().getText(), containsString("0"));
+
+        demoPage.updateIntegerValue(2);
+
+        assertThat("unexpected manual input value", WebElements.getValue(driver, demoPage.getIntegerInput()), endsWith("2"));
+        assertThat("unexpected manual output value", demoPage.getIntegerOutputText().getText(), endsWith("2"));
     }
 
     private String updateString() {

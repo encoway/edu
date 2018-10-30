@@ -1,11 +1,11 @@
 package com.encoway.edu.util;
 
-import java.util.concurrent.TimeUnit;
-
 import com.google.common.base.Function;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 

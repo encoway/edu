@@ -1,15 +1,14 @@
 package com.encoway.edu;
 
-import static org.hamcrest.Matchers.endsWith;
-
 import com.encoway.edu.util.WebDriverPatience;
-
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.Matchers.endsWith;
 
 /**
  * Abstract page representation.
@@ -52,7 +51,11 @@ public abstract class AbstractPage<T extends LoadableComponent<T>> extends Loada
     protected void clickAndWait(WebElement trigger) {
         trigger.click();
 
-        WebDriverPatience.wait(driver, 2, TimeUnit.SECONDS);
+        wait(2);
+    }
+
+    protected void wait(int duration) {
+        WebDriverPatience.wait(driver, duration, TimeUnit.SECONDS);
     }
 
 }

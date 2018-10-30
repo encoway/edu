@@ -1,6 +1,7 @@
 package com.encoway.edu;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,11 +36,25 @@ public class DemoPage extends AbstractPage<DemoPage> {
         clickAndWait(stringButton);
     }
 
+    public void updateStringValue(String value) {
+        getStringInput().click();
+        getStringInput().sendKeys(value, Keys.TAB);
+        getStringOutputText().click();
+        wait(2);
+    }
+
     /**
      * Clicks the "Update Integer" button.
      */
     public void updateIntegerValue() {
         clickAndWait(integerButton);
+    }
+
+    public void updateIntegerValue(Integer value) {
+        getIntegerInput().click();
+        getIntegerInput().sendKeys(value.toString(), Keys.TAB);
+        getIntegerOutputText().click();
+        wait(2);
     }
 
     /**

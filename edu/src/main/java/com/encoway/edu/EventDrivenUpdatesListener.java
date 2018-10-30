@@ -15,35 +15,40 @@
  */
 package com.encoway.edu;
 
-import java.util.Objects;
-
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
+import javax.inject.Inject;
+import java.util.Map;
 
 /**
  * {@link SystemEventListener} mapping event names to registered {@link UIComponent}'s IDs.
  */
+@ApplicationScoped
 public class EventDrivenUpdatesListener implements SystemEventListener, ComponentSystemEventListener {
 
-    private final EventDrivenUpdatesMapProvider provider;
-
-    private final String attribute;
-
     /**
-     * Initializes a {@link EventDrivenUpdatesListener} with the specified {@code attribute} name and {@code provider}.
-     * @param attribute name of the attribute to look for
-     * @param provider EL provider to be used
+     * Default value.
      */
-    public EventDrivenUpdatesListener(String attribute, EventDrivenUpdatesMapProvider provider) {
-        Objects.requireNonNull(attribute, "attribute to look for");
-        Objects.requireNonNull(provider, "map provider");
-        
+    public static final String ATTRIBUTE_DEFAULT_NAME = "updateOn";
+    public static final String MAP_NAME = "edu";
+
+    private String attribute = ATTRIBUTE_DEFAULT_NAME;
+    private String mapVariableName = MAP_NAME;
+
+    @Inject
+    private EventDrivenUpdatesMap map;
+
+    public void setAttribute(String attribute) {
         this.attribute = attribute;
-        this.provider = provider;
+    }
+
+    public void setMapVariableName(String mapVariableName) {
+        this.mapVariableName = mapVariableName;
     }
 
     @Override
@@ -51,7 +56,13 @@ public class EventDrivenUpdatesListener implements SystemEventListener, Componen
         final UIComponent listener = componentEvent.getComponent();
         final FacesContext facesContext = FacesContext.getCurrentInstance();
         final String listenerId = Components.getFullyQualifiedComponentId(facesContext, listener);
-        provider.getMap(facesContext).add((String) listener.getAttributes().get(attribute), listenerId);
+
+        map.add((String) listener.getAttributes().get(attribute), listenerId);
+
+        Map<String, Object> viewMap = facesContext.getViewRoot().getViewMap();
+        if (viewMap.get(mapVariableName) == null) {
+            viewMap.put(mapVariableName, map);
+        }
     }
 
     @Override

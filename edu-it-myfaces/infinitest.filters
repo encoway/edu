@@ -1,2 +1,0 @@
-# Excludes all integration tests ( = tests ended by IT)
-.*IT

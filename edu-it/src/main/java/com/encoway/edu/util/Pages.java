@@ -1,17 +1,16 @@
 package com.encoway.edu.util;
 
-import java.io.ByteArrayOutputStream;
-
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-
 import com.google.common.io.Resources;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+import java.io.ByteArrayOutputStream;
 
 /**
  * Utility class providing page related helper methods.
  */
+@Named
 @ApplicationScoped
-@ManagedBean(name = "pages")
 public class Pages {
 
     /**
