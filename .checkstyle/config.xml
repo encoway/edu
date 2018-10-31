@@ -193,7 +193,7 @@
         <module name="ImportOrder">
             <property name="severity" value="warning" />
             <property name="option" value="top" />
-            <property name="groups" value="com.encoway,java,javax" />
+            <property name="groups" value="com.encoway,javax,java" />
             <property name="ordered" value="true" />
             <property name="separated" value="true" />
             <property name="caseSensitive" value="true" />

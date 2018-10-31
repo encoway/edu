@@ -89,7 +89,11 @@
  *
  * #### Programmatic
  *
- * It is possible to trigger component updates from java code. This is done through the com.encoway.edu.EventDrivenUpdatesContext. An instance of which may be obtained via injection or a static helper method `EventDrivenUpdatesContext.getCurrentInstance()`. The `EventDrivenUpdatesContext` is registered under the name `eduContext` by default. This may be overridden, however (see section Configuration).
+ * It is possible to trigger component updates from java code. This is done through the
+ * `com.encoway.edu.EventDrivenUpdatesContext`.
+ * An instance of which may be obtained via injection or a static helper method `EventDrivenUpdatesContext.getCurrentInstance()`.
+ * The `EventDrivenUpdatesContext` is registered under the name `eduContext` by default.
+ * This may be overridden, however (see section Configuration).
  *
  * The following snippet demonstrates the programmatic usage of EDU:
  *

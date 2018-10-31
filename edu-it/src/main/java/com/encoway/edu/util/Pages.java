@@ -1,10 +1,11 @@
 package com.encoway.edu.util;
 
-import com.google.common.io.Resources;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+
 import java.io.ByteArrayOutputStream;
+
+import com.google.common.io.Resources;
 
 /**
  * Utility class providing page related helper methods.

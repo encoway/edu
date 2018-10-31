@@ -1,17 +1,18 @@
 package com.encoway.edu.controller;
 
-import com.encoway.edu.EventDrivenUpdatesContext;
-import com.encoway.edu.model.DemoModel;
-import com.encoway.edu.model.IntegerModel;
-import com.encoway.edu.model.StringModel;
-
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.encoway.edu.EventDrivenUpdatesContext;
+import com.encoway.edu.model.DemoModel;
+import com.encoway.edu.model.IntegerModel;
+import com.encoway.edu.model.StringModel;
 
 /**
  * Demo bean holding some values and providing logic for manipulating them.

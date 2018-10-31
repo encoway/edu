@@ -6,7 +6,8 @@ Event Driven Updates
 Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.
 
 EDU does so by allowing components to request being re-rendered/updated based on an **event**.
-An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., *configuration-changed*.
+An event in terms of EDU is just a name through which it can be referenced by a triggering component,
+e.g., *configuration-changed*.
 
 ## Demo
 
@@ -36,8 +37,10 @@ Add the following dependency to the `<dependencies>` section of your `pom.xml`:
 </dependency>
 ```
 
-Releases are hosted on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.encoway). Additionally 
-releases and snapshots are hosted by [Sonatype](http://central.sonatype.org/) at `https://oss.sonatype.org/content/groups/public`. In order to use snapshots make sure their repository is defined in the `<repositories>` section of your `pom.xml`:
+Releases are hosted on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.encoway).
+Additionally releases and snapshots are hosted by [Sonatype](http://central.sonatype.org/)
+at `https://oss.sonatype.org/content/groups/public`.
+In order to use snapshots make sure their repository is defined in the `<repositories>` section of your `pom.xml`:
 
 ```xml
 <repository>  
