@@ -13,79 +13,46 @@
     <![endif]-->
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>EDU - Event Driven Updates</h1>
-        <p>Decoupling JSF Components</p>
-
-        <p class="view"><a href="https://github.com/encoway/edu">View the Project on GitHub <small>encoway/edu</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/encoway/edu/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/encoway/edu/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/encoway/edu">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="event-driven-updates" class="anchor" href="#event-driven-updates"><span class="octicon octicon-link"></span></a>Event Driven Updates</h1>
-
-<p><a href="https://travis-ci.org/encoway/edu"><img src="https://travis-ci.org/encoway/edu.svg?branch=master" alt="Build Status"></a></p>
-
+<article class="wrapper markdown-body entry-content" itemprop="text"><h1><a id="user-content-event-driven-updates" class="anchor" aria-hidden="true" href="#event-driven-updates"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Event Driven Updates</h1>
+<p><a href="https://travis-ci.org/encoway/edu" rel="nofollow"><img src="https://camo.githubusercontent.com/d31058476f613dda6eb9374e3c12843235b69f85/68747470733a2f2f7472617669732d63692e6f72672f656e636f7761792f6564752e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/encoway/edu.svg?branch=master" style="max-width:100%;"></a></p>
 <p>Event Driven Updates (EDU) helps decoupling components of AJAX heavy JSF UIs.</p>
-
 <p>EDU does so by allowing components to request being re-rendered/updated based on an <strong>event</strong>.
-An event in terms of EDU is just a name through which it can be referenced by a triggering component e.g., <em>configuration-changed</em>.</p>
-
-<h2>
-<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h2>
-
-<p>There are two projects used for integration testing based on <a href="https://github.com/encoway/edu/tree/master/edu-it-myfaces">MyFaces</a> and <a href="https://github.com/encoway/edu/tree/master/edu-it-mojarra">Mojarra</a>. Each can be launched running the maven command <code>mvn jetty:run</code> from within their module folder.</p>
-
-<h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
-
-<p>For usage instructions see module <a href="https://github.com/encoway/edu/tree/master/edu">edu</a>.</p>
-
-<h2>
-<a name="integration" class="anchor" href="#integration"><span class="octicon octicon-link"></span></a>Integration</h2>
-
+An event in terms of EDU is just a name through which it can be referenced by a triggering component,
+e.g., <em>configuration-changed</em>.</p>
+<h2><a id="user-content-demo" class="anchor" aria-hidden="true" href="#demo"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Demo</h2>
+<p>There is an integration test based on <a href="https://github.com/encoway/edu/tree/master/edu-it-mojarra">Mojarra</a>.
+It can be launched running the maven command <code>mvn wildfly:run</code> from within the module folder and viewed in a browser
+at <a href="http://localhost:8080/edu-it-mojarra" rel="nofollow">http://localhost:8080/edu-it-mojarra</a>.</p>
+<h2><a id="user-content-usage" class="anchor" aria-hidden="true" href="#usage"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Usage</h2>
+<p>For usage instructions see module <a href="/encoway/edu/blob/master/edu"><code>edu</code></a>.</p>
+<h2><a id="user-content-integration" class="anchor" aria-hidden="true" href="#integration"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Integration</h2>
 <p>In order to use EDU in a web application the <code>edu.jar</code> must be present on the classpath.</p>
-
-<p>EDU has <strong>no transitive dependencies</strong>. It expects <code>javax.servlet-api</code> and <code>javax.el-api</code> to be present on the class path.</p>
-
-<h3>
-<a name="maven" class="anchor" href="#maven"><span class="octicon octicon-link"></span></a>Maven</h3>
-
-<p>Add the following dependency to the <code>&lt;dependencies&gt;</code> section in a POM:</p>
-
-<div class="highlight highlight-xhtml"><pre><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.encoway<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>edu<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>X.Y.Z<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
-
-<p>The artifacts (releases and snapshots) are hosted by <a href="http://central.sonatype.org/">Sonatype</a> at <code>https://oss.sonatype.org/content/groups/public</code> so make sure this is available as a repository:</p>
-
-<div class="highlight highlight-xml"><pre><span class="nt">&lt;repository&gt;</span>  
-    <span class="nt">&lt;id&gt;</span>Sonatype repository<span class="nt">&lt;/id&gt;</span>  
-    <span class="nt">&lt;name&gt;</span>Sonatype's Maven repository<span class="nt">&lt;/name&gt;</span>  
-    <span class="nt">&lt;url&gt;</span>http://oss.sonatype.org/content/groups/public<span class="nt">&lt;/url&gt;</span>  
-<span class="nt">&lt;/repository&gt;</span>
-</pre></div>
-
-<h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
-
+<p>EDU has <strong>no transitive dependencies</strong>. It expects <code>javax.javaee-web-api</code> to be present on the class path.</p>
+<h3><a id="user-content-maven" class="anchor" aria-hidden="true" href="#maven"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Maven</h3>
+<p>Add the following dependency to the <code>&lt;dependencies&gt;</code> section of your <code>pom.xml</code>:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.encoway&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;edu&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;X.Y.Z&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+<p>Releases are hosted on <a href="http://search.maven.org/#search%7Cga%7C1%7Ccom.encoway" rel="nofollow">Maven Central</a>.
+Additionally releases and snapshots are hosted by <a href="http://central.sonatype.org/" rel="nofollow">Sonatype</a>
+at <code>https://oss.sonatype.org/content/groups/public</code>.
+In order to use snapshots make sure their repository is defined in the <code>&lt;repositories&gt;</code> section of your <code>pom.xml</code>:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">repository</span>&gt;  
+    &lt;<span class="pl-ent">id</span>&gt;Sonatype repository&lt;/<span class="pl-ent">id</span>&gt;  
+    &lt;<span class="pl-ent">name</span>&gt;Sonatype's Maven repository&lt;/<span class="pl-ent">name</span>&gt;  
+    &lt;<span class="pl-ent">url</span>&gt;http://oss.sonatype.org/content/groups/public&lt;/<span class="pl-ent">url</span>&gt;  
+    &lt;<span class="pl-ent">releases</span>&gt;
+        &lt;<span class="pl-ent">enabled</span>&gt;true&lt;/<span class="pl-ent">enabled</span>&gt;
+    &lt;/<span class="pl-ent">releases</span>&gt;
+    &lt;<span class="pl-ent">snapshots</span>&gt;
+        &lt;<span class="pl-ent">enabled</span>&gt;true&lt;/<span class="pl-ent">enabled</span>&gt;
+    &lt;/<span class="pl-ent">snapshots</span>&gt;
+&lt;/<span class="pl-ent">repository</span>&gt;</pre></div>
+<h2><a id="user-content-license" class="anchor" aria-hidden="true" href="#license"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>License</h2>
 <p>EDU is licensed under Apache 2.0.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/encoway">encoway</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
+</article>
     <script src="javascripts/scale.fix.js"></script>
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
