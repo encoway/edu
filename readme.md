@@ -10,7 +10,9 @@ An event in terms of EDU is just a name through which it can be referenced by a 
 
 ## Demo
 
-There is an integration test based on [Mojarra](https://github.com/encoway/edu/tree/master/edu-it-mojarra). Each can be launched running the maven command `mvn jetty:run` from within their module folder and viewed in a browser at http://localhost:8080.  
+There is an integration test based on [Mojarra](https://github.com/encoway/edu/tree/master/edu-it-mojarra).
+It can be launched running the maven command `mvn wildfly:run` from within the module folder and viewed in a browser 
+at http://localhost:8080/edu-it-mojarra.  
 
 ## Usage
 
